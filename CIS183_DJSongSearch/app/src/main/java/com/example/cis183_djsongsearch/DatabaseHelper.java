@@ -350,6 +350,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
         //update command
         //UPDATE DJ_TABLE SET djName = 'djName' WHERE DJ_PRIMARY = 'id';
         db.execSQL("UPDATE " + DJ_TABLE + " SET djName = '" + dj.getDjName() + "' WHERE " + DJ_PRIMARY + " = '" + dj.getId() + "';");
+
+        db.close();
     }
 
     public void updateEvent(Event e)
@@ -358,6 +360,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
         //UPDATE EVENT_TABLE SET dj = 'dj' , date = 'date' , time = 'time' , location = 'location' , isPrivate = 'isPrivate' WHERE EVENT_PRIMARY = 'eventCode';
         db.execSQL("UPDATE " + EVENT_TABLE + " SET dj = '" + e.getDj() + "' , date = '" + e.getTime() + "' , location = '" + e.getLocation() + "' , isPrivate = '" + e.getPrivate() + "' WHERE " + EVENT_PRIMARY + " = '" + e.getEventCode() + "';");
+
+        db.close();
     }
 
     public void updateAttendee(Attendee a)
@@ -365,6 +369,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
 
         //UPDATE ATTENDEE_TABLE SET password = 'password', WHERE ATTENDEE_PRIMARY = 'username';
+        db.execSQL("UPDATE " + ATTENDEE_TABLE + " SET password = '" + a.getPassword() + "' , WHERE " + ATTENDEE_PRIMARY + " = '" + a.getUsername() + "';");
+
+        db.close();
     }
 
     public void updateSong(Song s)
@@ -372,6 +379,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
 
         //UPDATE SONG_TABLE SET name = 'name' , artist = 'artist' , isExplicit = 'isExplicit' , duration = 'duration' WHERE SONG_PRIMARY = 'id';
+        db.execSQL("UPDATE " + SONG_TABLE + " SET name = '" + s.getName() + "' , artist = '" + s.getArtist() + "' , isExplicit = '" + s.getExplicit() + "' , duration = '" + s.getDuration() + "' WHERE " + SONG_PRIMARY + " =  '" + s.getId() + "';");
+
+        db.close();
     }
 
 }
