@@ -342,4 +342,36 @@ public class DatabaseHelper extends SQLiteOpenHelper
         return listSongs;
     }
 
+    public void updateDj(Dj dj)
+    {
+        //write to update
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //update command
+        //UPDATE DJ_TABLE SET djName = 'djName' WHERE DJ_PRIMARY = 'id';
+        db.execSQL("UPDATE " + DJ_TABLE + " SET djName = '" + dj.getDjName() + "' WHERE " + DJ_PRIMARY + " = '" + dj.getId() + "';");
+    }
+
+    public void updateEvent(Event e)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //UPDATE EVENT_TABLE SET dj = 'dj' , date = 'date' , time = 'time' , location = 'location' , isPrivate = 'isPrivate' WHERE EVENT_PRIMARY = 'eventCode';
+        db.execSQL("UPDATE " + EVENT_TABLE + " SET dj = '" + e.getDj() + "' , date = '" + e.getTime() + "' , location = '" + e.getLocation() + "' , isPrivate = '" + e.getPrivate() + "' WHERE " + EVENT_PRIMARY + " = '" + e.getEventCode() + "';");
+    }
+
+    public void updateAttendee(Attendee a)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //UPDATE ATTENDEE_TABLE SET password = 'password', WHERE ATTENDEE_PRIMARY = 'username';
+    }
+
+    public void updateSong(Song s)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //UPDATE SONG_TABLE SET name = 'name' , artist = 'artist' , isExplicit = 'isExplicit' , duration = 'duration' WHERE SONG_PRIMARY = 'id';
+    }
+
 }
