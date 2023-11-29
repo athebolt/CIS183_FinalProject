@@ -33,10 +33,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
     {
         //Tables: Dj, Event, Attendee, Song
 
-        //Dj - id (primary), djName, songLibrary, events
-        //Event - eventCode (primary), dj, date, time, location, isPrivate
-        //Attendee - username (primary), password
-        //Song - id (primary), name, artist, isExplicit, duration
+        //Dj - djId (primary), djName, password
+        //Event - eventCode (primary), djId (foreign), date, time, location, isPrivate
+        //Attendee - username (primary), fName, lName, password, eventCode (foreign)
+        //Song - SongId (primary), songName, artist, isExplicit, duration, djId (foreign)
 
         db.execSQL("CREATE TABLE " + DJ_TABLE + " ( id TEXT PRIMARY KEY NOT NULL, djName TEXT);");
         db.execSQL("CREATE TABLE " + EVENT_TABLE + " ( eventCode TEXT PRIMARY KEY NOT NULL, dj TEXT, date TEXT, time TEXT, location TEXT, isPrivate TEXT);");

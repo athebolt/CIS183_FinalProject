@@ -4,25 +4,23 @@ import java.util.ArrayList;
 
 public class Dj
 {
-    private String id;
+    private int id;
     private String djName;
-    private final ArrayList<Song> songLibrary;
-    private final ArrayList<Event> events;
+    private String password;
 
-    public Dj(String i, String n, ArrayList<Song> l, ArrayList<Event> e)
+    public Dj(int i, String n, String p)
     {
         id = i;
         djName = n;
-        songLibrary = l;
-        events = e;
+        password = p;
     }
 
-    public String getId()
+    public int getId()
     {
         return id;
     }
 
-    public void setId(String i)
+    public void setId(int i)
     {
         id = i;
     }
@@ -36,24 +34,12 @@ public class Dj
     {
         djName = n;
     }
-
-    public void addSong(Song s)
+    public String getPassword()
     {
-        songLibrary.add(s);
+        return password;
     }
-
-    public void removeSong(Song s)
+    public void setPassword(String p)
     {
-        songLibrary.remove(s);
-    }
-
-    public void addEvent(Event e)
-    {
-        events.add(e);
-    }
-
-    public void removeEvent(Event e)
-    {
-        events.remove(e);
+        password = p;
     }
 }

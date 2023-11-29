@@ -3,7 +3,10 @@ package com.example.cis183_djsongsearch;
 public class Attendee
 {
     private String username;
+    private String fName;
+    private String lName;
     private String password;
+    private String eventCode;
 
     public Attendee()
     {

@@ -13,10 +13,64 @@
         android:theme="@style/Theme.CIS183_DJSongSearch"
         tools:targetApi="31">
         <activity
+            android:name=".AttendeeSongInfo"
+            android:exported="false" />
+        <activity
+            android:name=".AttendeeInfo"
+            android:exported="false" />
+        <activity
+            android:name=".SongSearch"
+            android:exported="false" />
+        <activity
+            android:name=".RequestSong"
+            android:exported="false" />
+        <activity
+            android:name=".EventConfirm"
+            android:exported="false" />
+        <activity
+            android:name=".EventManualSearch"
+            android:exported="false" />
+        <activity
+            android:name=".EventSearch"
+            android:exported="false" />
+        <activity
+            android:name=".EventInfo"
+            android:exported="false" />
+        <activity
+            android:name=".CreateEvent"
+            android:exported="false" />
+        <activity
+            android:name=".ActiveEvent"
+            android:exported="false" />
+        <activity
+            android:name=".DjInfo"
+            android:exported="false" />
+        <activity
+            android:name=".SongInfo"
+            android:exported="false" />
+        <activity
+            android:name=".CreateSong"
+            android:exported="false" />
+        <activity
+            android:name=".EventLibrary"
+            android:exported="false" />
+        <activity
+            android:name=".SongLibrary"
+            android:exported="false" />
+        <activity
+            android:name=".DjHome"
+            android:exported="false" />
+        <activity
+            android:name=".AttendeeSignUp"
+            android:exported="false" />
+        <activity
+            android:name=".AttendeeSignIn"
+            android:exported="false" />
+        <activity
             android:name=".DjSignUp"
             android:exported="false" />
         <activity
-            android:name=".SignIn"
+            android:name=".DjSignIn"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

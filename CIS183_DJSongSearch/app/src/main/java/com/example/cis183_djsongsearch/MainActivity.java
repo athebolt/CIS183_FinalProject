@@ -11,8 +11,8 @@ public class MainActivity extends AppCompatActivity
 {
     Button btn_j_ma_djSignIn;
     Button btn_j_ma_attendeeSignIn;
-    Intent signInIntent;
-    Boolean isDj;
+    Intent djSignInIntent;
+    Intent attendeeSignInIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -23,9 +23,8 @@ public class MainActivity extends AppCompatActivity
         btn_j_ma_djSignIn = findViewById(R.id.btn_v_ma_djSignIn);
         btn_j_ma_attendeeSignIn = findViewById(R.id.btn_v_ma_attendeeSignIn);
 
-        signInIntent = new Intent(MainActivity.this, SignIn.class);
-
-        //isDj = false;
+        djSignInIntent = new Intent(MainActivity.this, DjSignIn.class);
+        attendeeSignInIntent = new Intent(MainActivity.this, AttendeeSignIn.class);
 
         dJSignInButtonEventHandler();
         attendeeSignInButtonEventHandler();
@@ -38,10 +37,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                isDj = true;
-
-                signInIntent.putExtra("isDj", isDj);
-                startActivity(signInIntent);
+                startActivity(djSignInIntent);
             }
         });
     }
@@ -53,10 +49,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                isDj = false;
-
-                signInIntent.putExtra("isDj", isDj);
-                startActivity(signInIntent);
+                startActivity(attendeeSignInIntent);
             }
         });
     }
