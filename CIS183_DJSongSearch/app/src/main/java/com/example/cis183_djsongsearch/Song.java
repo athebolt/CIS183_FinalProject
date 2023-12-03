@@ -2,43 +2,45 @@ package com.example.cis183_djsongsearch;
 
 public class Song
 {
-    private String id;
-    private String name;
+    private String songId;
+    private String songName;
     private String artist;
     private String isExplicit;
     private String duration;
+    private int djId;
 
     public Song()
     {
 
     }
-    public Song(String i, String n, String a, String e, String d)
+    public Song(String i, String n, String a, String e, String d, int j)
     {
-        id = i;
-        name = n;
+        songId = i;
+        songName = n;
         artist = a;
         isExplicit = e;
         duration = d;
+        djId = j;
     }
 
-    public String getId()
+    public String getSongId()
     {
-        return id;
+        return songId;
     }
 
-    public void setId(String i)
+    public void setSongId(String i)
     {
-        id = i;
+        songId = i;
     }
 
-    public String getName()
+    public String getSongName()
     {
-        return name;
+        return songName;
     }
 
-    public void setName(String n)
+    public void setSongName(String n)
     {
-        name = n;
+        songName= n;
     }
 
     public String getArtist()
@@ -69,5 +71,14 @@ public class Song
     public void setDuration(String d)
     {
         duration = d;
+    }
+    public int getDjId()
+    {
+        return djId;
+    }
+
+    public void setDjId(int i)
+    {
+        djId = i;
     }
 }

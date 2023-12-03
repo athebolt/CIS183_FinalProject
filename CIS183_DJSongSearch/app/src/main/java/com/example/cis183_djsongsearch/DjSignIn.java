@@ -9,11 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class DjSignIn extends AppCompatActivity
 {
     TextView tv_j_dsi_title;
     TextView tv_j_dsi_name;
     TextView tv_j_dsi_pass;
+    TextView tv_j_dsi_error;
     EditText et_j_dsi_name;
     EditText et_j_dsi_pass;
     Button btn_j_dsi_signIn;
@@ -22,6 +25,8 @@ public class DjSignIn extends AppCompatActivity
     Intent mainActivityIntent;
     Intent djSignUpIntent;
     Intent djHomeIntent;
+    DatabaseHelper dbHelper;
+    ArrayList<Dj> listOfDjs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -32,6 +37,7 @@ public class DjSignIn extends AppCompatActivity
         tv_j_dsi_title = findViewById(R.id.tv_v_dsi_title);
         tv_j_dsi_name = findViewById(R.id.tv_v_dsi_name);
         tv_j_dsi_pass = findViewById(R.id.tv_v_dsi_pass);
+        tv_j_dsi_error = findViewById(R.id.tv_v_dsi_error);
         et_j_dsi_name = findViewById(R.id.et_v_dsi_name);
         et_j_dsi_pass = findViewById(R.id.et_v_dsi_pass);
         btn_j_dsi_signIn = findViewById(R.id.btn_v_dsi_signIn);
@@ -41,6 +47,8 @@ public class DjSignIn extends AppCompatActivity
         mainActivityIntent = new Intent(DjSignIn.this, MainActivity.class);
         djSignUpIntent = new Intent(DjSignIn.this, DjSignUp.class);
         djHomeIntent = new Intent(DjSignIn.this, DjHome.class);
+
+        dbHelper = new DatabaseHelper(this);
 
         signInButtonEventHandler();
         signUpButtonEventHandler();
@@ -54,7 +62,25 @@ public class DjSignIn extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                startActivity(djHomeIntent);
+                int i = 0;
+
+                listOfDjs = dbHelper.getAllDjs();
+
+                while(!et_j_dsi_name.getText().toString().equals(listOfDjs.get(i).getDjName()) && i < listOfDjs.size())
+                {
+                    i++;
+                }
+
+                if(et_j_dsi_pass.getText().toString().equals(listOfDjs.get(i).getPassword()))
+                {
+                    djHomeIntent.putExtra("DJ",listOfDjs.get(i));
+
+                    startActivity(djHomeIntent);
+                }
+
+                tv_j_dsi_error.setVisibility(View.VISIBLE);
+                et_j_dsi_name.setText("");
+                et_j_dsi_pass.setText("");
             }
         });
     }

@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 public class SongLibrary extends AppCompatActivity
 {
     Button btn_j_sl_add;
@@ -17,6 +19,10 @@ public class SongLibrary extends AppCompatActivity
     Intent songInfoIntent;
     Intent createSongIntent;
     Intent djHomeIntent;
+    Dj dj;
+    DatabaseHelper dbHelper;
+    ArrayList<Song> songs;
+    SongLibraryListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,6 +37,18 @@ public class SongLibrary extends AppCompatActivity
         songInfoIntent = new Intent(SongLibrary.this, SongInfo.class);
         createSongIntent = new Intent(SongLibrary.this, CreateSong.class);
         djHomeIntent = new Intent(SongLibrary.this, DjHome.class);
+
+        dbHelper = new DatabaseHelper(this);
+
+        Intent cameFrom = getIntent();
+
+        dj = (Dj) cameFrom.getSerializableExtra("DJ");
+
+        songs = dbHelper.getSongsOfDj(dj.getDjId());
+
+        adapter = new SongLibraryListAdapter(this, songs);
+
+        lv_j_sl_songs.setAdapter(adapter);
 
         AddButtonEventHandler();
         BackButtonEventHandler();
@@ -79,9 +97,9 @@ public class SongLibrary extends AppCompatActivity
         lv_j_sl_songs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
         {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long id)
             {
-                //remove song
+                dbHelper.deleteSong(songs.get(i).getSongId());
 
                 return false;
             }

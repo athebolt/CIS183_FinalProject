@@ -6,86 +6,148 @@
     android:layout_height="match_parent"
     tools:context=".CreateEvent">
 
+    <EditText
+        android:id="@+id/et_v_ce_loc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="@+id/et_v_ce_time"
+        app:layout_constraintTop_toBottomOf="@+id/et_v_ce_time" />
+
     <TextView
         android:id="@+id/textView25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
         android:layout_marginTop="48dp"
         android:text="Create Event"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/textView26"
+        app:layout_constraintStart_toStartOf="@+id/et_v_ce_code"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView26"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="5dp"
         android:text="Event Code:"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+        app:layout_constraintBottom_toBottomOf="@+id/et_v_ce_code"
+        app:layout_constraintEnd_toStartOf="@+id/et_v_ce_code"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView27"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="15dp"
         android:text="Date:"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/textView26"
+        app:layout_constraintEnd_toStartOf="@+id/et_v_ce_date"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView26" />
 
     <TextView
         android:id="@+id/textView28"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="38dp"
         android:text="Time:"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/textView27"
-        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+        app:layout_constraintBottom_toTopOf="@+id/textView29"
+        app:layout_constraintEnd_toStartOf="@+id/et_v_ce_time"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView29"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginBottom="7dp"
         android:text="Location:"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/textView28"
-        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+        app:layout_constraintBottom_toBottomOf="@+id/et_v_ce_loc"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="42dp"
         android:text="Private:"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/textView29"
+        app:layout_constraintEnd_toStartOf="@+id/cb_v_ce_private"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView29" />
 
     <Button
         android:id="@+id/btn_v_ce_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="16dp"
         android:text="Create"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btn_v_ce_back"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/cb_v_ce_private"
+        app:layout_constraintTop_toBottomOf="@+id/cb_v_ce_private" />
 
     <Button
         android:id="@+id/btn_v_ce_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="301dp"
-        android:layout_marginEnd="86dp"
-        android:layout_marginBottom="302dp"
+        android:layout_marginStart="43dp"
         android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_v_ce_create"
+        app:layout_constraintStart_toEndOf="@+id/cb_v_ce_private" />
+
+    <EditText
+        android:id="@+id/et_v_ce_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView26"
         app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+    <EditText
+        android:id="@+id/et_v_ce_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView27"
+        app:layout_constraintTop_toBottomOf="@+id/et_v_ce_code" />
+
+    <EditText
+        android:id="@+id/et_v_ce_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView28"
+        app:layout_constraintTop_toBottomOf="@+id/et_v_ce_date" />
+
+    <CheckBox
+        android:id="@+id/cb_v_ce_private"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/et_v_ce_loc"
+        app:layout_constraintTop_toBottomOf="@+id/et_v_ce_loc" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

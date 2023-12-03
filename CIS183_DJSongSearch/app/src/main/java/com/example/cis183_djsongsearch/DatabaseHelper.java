@@ -18,10 +18,6 @@ public class DatabaseHelper extends SQLiteOpenHelper
     private static final String ATTENDEE_TABLE = "Attendees";
     private static final String SONG_TABLE = "Songs";
 
-    private static final String DJ_PRIMARY = "id";
-    private static final String EVENT_PRIMARY = "eventCode";
-    private static final String ATTENDEE_PRIMARY = "username";
-    private static final String SONG_PRIMARY = "id";
     public DatabaseHelper(Context context)
     {
         //creates database
@@ -33,15 +29,15 @@ public class DatabaseHelper extends SQLiteOpenHelper
     {
         //Tables: Dj, Event, Attendee, Song
 
-        //Dj - djId (primary), djName, password
-        //Event - eventCode (primary), djId (foreign), date, time, location, isPrivate
-        //Attendee - username (primary), fName, lName, password, eventCode (foreign)
-        //Song - SongId (primary), songName, artist, isExplicit, duration, djId (foreign)
+        //Dj - djId int (primary) auto, djName text, password text
+        //Event - eventCode text (primary) not null, djId int (foreign), date text, time text, location text, isPrivate text, isActive text
+        //Attendee - username text (primary) not null, firstName text, lastName text, password text, eventCode text (foreign)
+        //Song - SongId int (primary) auto, songName text, artist text, isExplicit text, duration text, djId int (foreign)
 
-        db.execSQL("CREATE TABLE " + DJ_TABLE + " ( id TEXT PRIMARY KEY NOT NULL, djName TEXT);");
-        db.execSQL("CREATE TABLE " + EVENT_TABLE + " ( eventCode TEXT PRIMARY KEY NOT NULL, dj TEXT, date TEXT, time TEXT, location TEXT, isPrivate TEXT);");
-        db.execSQL("CREATE TABLE " + ATTENDEE_TABLE + " (username TEXT PRIMARY KEY NOT NULL, password TEXT)");
-        db.execSQL("CREATE TABLE " + SONG_TABLE + " (id TEXT PRIMARY KEY NOT NULL, name TEXT, artist TEXT, isExplicit TEXT, duration TEXT);");
+        db.execSQL("CREATE TABLE " + DJ_TABLE + "( djId INT PRIMARY KEY AUTOINCREMENT, djName TEXT, password TEXT);");
+        db.execSQL("CREATE TABLE " + EVENT_TABLE + " ( eventCode TEXT PRIMARY KEY NOT NULL, djId INT, date TEXT, time TEXT, location TEXT, isPrivate TEXT, isActive TEXT, FOREIGN KEY (djId) REFERENCES " + DJ_TABLE + " (djId) );");
+        db.execSQL("CREATE TABLE " + ATTENDEE_TABLE + " (username TEXT PRIMARY KEY NOT NULL, firstName TEXT, lastName TEXT, password TEXT, eventCode TEXT, FOREIGN KEY (eventCode) REFERENCES " + EVENT_TABLE + " (eventCode) );");
+        db.execSQL("CREATE TABLE " + SONG_TABLE + " (songId INT PRIMARY KEY AUTOINCREMENT, songName TEXT, artist TEXT, isExplicit TEXT, duration TEXT, djId INT, FOREIGN KEY (djId) REFERENCES " + DJ_TABLE + " (djId) );");
     }
 
     @Override
@@ -69,7 +65,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
             SQLiteDatabase db = this.getWritableDatabase();
 
             //sample entry
-            db.execSQL("INSERT INTO " + DJ_TABLE + " VALUES('0','Test');");
+            db.execSQL("INSERT INTO " + DJ_TABLE + " (djName, password) VALUES('Test','password');");
 
             //close db
             db.close();
@@ -79,7 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         {
             SQLiteDatabase db = this.getWritableDatabase();
 
-            db.execSQL("INSERT INTO " + EVENT_TABLE + " VALUES('0','Test','10/10/10','10:10','Monroe, MI','true');");
+            db.execSQL("INSERT INTO " + EVENT_TABLE + " VALUES('0','1','12/10/2023','10:10','Monroe, MI','false','true');");
 
             db.close();
         }
@@ -88,7 +84,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         {
             SQLiteDatabase db = this.getWritableDatabase();
 
-            db.execSQL("INSERT INTO " + ATTENDEE_TABLE + " VALUES('sample', 'password');");
+            db.execSQL("INSERT INTO " + ATTENDEE_TABLE + " (username, firstName, lastName, password) VALUES('ssample','sally','sample','password');");
 
             db.close();
         }
@@ -97,7 +93,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         {
             SQLiteDatabase db = this.getWritableDatabase();
 
-            db.execSQL("INSERT INTO " + ATTENDEE_TABLE + " VALUES('0','Sample','Test','false','1:00');");
+            db.execSQL("INSERT INTO " + SONG_TABLE + " (songName, artist, isExplicit, duration, djId) VALUES('Sample','Test','false','1:00','1');");
 
             db.close();
         }
@@ -169,8 +165,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
 
         //insert dj
-        //INSERT INTO DJ_TABLE VALUES('id','djName');
-        db.execSQL("INSERT INTO " + DJ_TABLE + " VALUES('" + dj.getId() + "','" + dj.getDjName() + "');");
+        //INSERT INTO DJ_TABLE VALUES('djName','password');
+        db.execSQL("INSERT INTO " + DJ_TABLE + " (djName, password) VALUES('" + dj.getDjName() + "','" + dj.getPassword() + "');");
 
         //close
         db.close();
@@ -180,8 +176,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        //INSERT INTO EVENT_TABLE VALUES('eventCode','dj','date','time','location','isPrivate');
-        db.execSQL("INSERT INTO " + EVENT_TABLE + " VALUES('" + e.getEventCode() + "','" + e.getDj() + "','" + e.getDate() + "','" + e.getTime() + "','" + e.getLocation() + "','" + e.getPrivate() + "');");
+        //INSERT INTO EVENT_TABLE (eventCode, djId, date, time, location, isPrivate, isActive) VALUES('eventCode','djId','date','time','location','isPrivate','false');
+        db.execSQL("INSERT INTO " + EVENT_TABLE + " VALUES('" + e.getEventCode() + "','" + e.getDjId() + "','" + e.getDate() + "','" + e.getTime() + "','" + e.getLocation() + "','" + e.getPrivate() + "','false');");
 
         db.close();
     }
@@ -191,7 +187,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
 
         //INSERT INTO ATTENDEE_TABLE VALUES('username','password');
-        db.execSQL("INSERT INTO " + ATTENDEE_TABLE + " VALUES('" + a.getUsername() + "','" + a.getPassword() + "');");
+        db.execSQL("INSERT INTO " + ATTENDEE_TABLE + " (username, firstName, lastName, password) VALUES('" + a.getUsername() + "','" + a.getFirstName() + "','" + a.getLastName() + "','" + a.getPassword() + "');");
 
         db.close();
     }
@@ -200,12 +196,14 @@ public class DatabaseHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        //INSERT INTO SONG_TABLE VALUES('id','name','artist','isExplicit','duration');
-        db.execSQL("INSERT INTO " + SONG_TABLE + " VALUES('" + s.getId() + "','" + s.getName() + "','" + s.getArtist() + "','" + s.getExplicit() + "','" + s.getDuration() + "');");
+        //INSERT INTO SONG_TABLE VALUES('name','artist','isExplicit','duration','djId');
+        db.execSQL("INSERT INTO " + SONG_TABLE + " (songName, artist, isExplicit, duration, djId) VALUES(" + s.getSongName() + "','" + s.getArtist() + "','" + s.getExplicit() + "','" + s.getDuration() + "','" + s.getDjId() + "');");
 
         db.close();
     }
 
+    //=================================================
+    //get all of a table
     @SuppressLint("Range")
     public ArrayList<Dj> getAllDjs()
     {
@@ -216,21 +214,23 @@ public class DatabaseHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getReadableDatabase();
 
         //query to get all rows and attributes
-        Cursor cursor = db.rawQuery("SELECT * FROM " + DJ_TABLE + " ORDER BY " + DJ_PRIMARY + ";", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DJ_TABLE + " ORDER BY djId;", null);
 
         //variables to store info
-        String id;
+        int djId;
         String djName;
+        String password;
 
         //move to first
         if(cursor.moveToFirst())
         {
             do
             {
-                id = cursor.getString(cursor.getColumnIndex("id"));
+                djId = cursor.getInt(cursor.getColumnIndex("djId"));
                 djName = cursor.getString(cursor.getColumnIndex("djName"));
+                password = cursor.getString(cursor.getColumnIndex("password"));
 
-                //listDjs.add(new Dj(id, djName));
+                listDjs.add(new Dj(djId, djName, password));
             }
             while(cursor.moveToNext());
         }
@@ -248,27 +248,29 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + EVENT_TABLE + " ORDER BY " + EVENT_PRIMARY + ";", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + EVENT_TABLE + " ORDER BY eventCode;", null);
 
         String eventCode;
-        String dj;
+        int djId;
         String date;
         String time;
         String location;
         String isPrivate;
+        String isActive;
 
         if(cursor.moveToFirst())
         {
             do
             {
                 eventCode = cursor.getString(cursor.getColumnIndex("eventCode"));
-                dj = cursor.getString(cursor.getColumnIndex("dj"));
+                djId = cursor.getInt(cursor.getColumnIndex("dj"));
                 date = cursor.getString(cursor.getColumnIndex("date"));
                 time = cursor.getString(cursor.getColumnIndex("time"));
                 location = cursor.getString(cursor.getColumnIndex("location"));
                 isPrivate = cursor.getString(cursor.getColumnIndex("isPrivate"));
+                isActive = cursor.getString(cursor.getColumnIndex("isActive"));
 
-                listEvents.add(new Event(eventCode, dj, date, time, location, isPrivate));
+                listEvents.add(new Event(eventCode, djId, date, time, location, isPrivate, isActive));
             }
             while(cursor.moveToNext());
         }
@@ -277,7 +279,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
         return listEvents;
     }
-
+    //will probably never be used
     @SuppressLint("Range")
     private ArrayList<Attendee> getAllAttendees()
     {
@@ -285,9 +287,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + ATTENDEE_TABLE + " ORDER BY " + ATTENDEE_PRIMARY + ";", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + ATTENDEE_TABLE + " ORDER BY username;", null);
 
         String username;
+        String firstName;
+        String lastName;
         String password;
 
         if(cursor.moveToFirst())
@@ -295,9 +299,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
             do
             {
                 username = cursor.getString(cursor.getColumnIndex("username"));
+                firstName = cursor.getString(cursor.getColumnIndex("firstName"));
+                lastName = cursor.getString(cursor.getColumnIndex("lastName"));
                 password = cursor.getString(cursor.getColumnIndex("password"));
 
-                listAttendees.add(new Attendee(username, password));
+                listAttendees.add(new Attendee(username, firstName, lastName, password));
             }
             while(cursor.moveToNext());
         }
@@ -306,7 +312,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
         return listAttendees;
     }
-
+    //will probably never be used
     @SuppressLint("Range")
     private ArrayList<Song> getAllSongs()
     {
@@ -314,25 +320,27 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + SONG_TABLE + " ORDER BY " + SONG_PRIMARY + ";", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + SONG_TABLE + " ORDER BY songId;", null);
 
-        String id;
-        String name;
+        String songId;
+        String songName;
         String artist;
         String isExplicit;
         String duration;
+        int djId;
 
         if(cursor.moveToFirst())
         {
             do
             {
-                id = cursor.getString(cursor.getColumnIndex("id"));
-                name = cursor.getString(cursor.getColumnIndex("name"));
+                songId = cursor.getString(cursor.getColumnIndex("id"));
+                songName = cursor.getString(cursor.getColumnIndex("name"));
                 artist = cursor.getString(cursor.getColumnIndex("artist"));
                 isExplicit = cursor.getString(cursor.getColumnIndex("isExplicit"));
                 duration = cursor.getString(cursor.getColumnIndex("duration"));
+                djId = cursor.getInt(cursor.getColumnIndex("djId"));
 
-                listSongs.add(new Song(id, name, artist, isExplicit, duration));
+                listSongs.add(new Song(songId, songName, artist, isExplicit, duration, djId));
             }
             while(cursor.moveToNext());
         }
@@ -341,16 +349,20 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
         return listSongs;
     }
+    //=================================================
 
+    //=================================================
+    //update commands
     public void updateDj(Dj dj)
     {
         //write to update
         SQLiteDatabase db = this.getWritableDatabase();
 
         //update command
-        //UPDATE DJ_TABLE SET djName = 'djName' WHERE DJ_PRIMARY = 'id';
-        db.execSQL("UPDATE " + DJ_TABLE + " SET djName = '" + dj.getDjName() + "' WHERE " + DJ_PRIMARY + " = '" + dj.getId() + "';");
+        //UPDATE DJ_TABLE SET djName = 'djName', password = 'password' WHERE djId = 'djId';
+        db.execSQL("UPDATE " + DJ_TABLE + " SET djName = '" + dj.getDjName() + "' , password = '" + dj.getPassword() + "' WHERE djId = '" + dj.getDjId() + "';");
 
+        //close db
         db.close();
     }
 
@@ -358,8 +370,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        //UPDATE EVENT_TABLE SET dj = 'dj' , date = 'date' , time = 'time' , location = 'location' , isPrivate = 'isPrivate' WHERE EVENT_PRIMARY = 'eventCode';
-        db.execSQL("UPDATE " + EVENT_TABLE + " SET dj = '" + e.getDj() + "' , date = '" + e.getTime() + "' , location = '" + e.getLocation() + "' , isPrivate = '" + e.getPrivate() + "' WHERE " + EVENT_PRIMARY + " = '" + e.getEventCode() + "';");
+        //UPDATE EVENT_TABLE SET djId = 'djId' , date = 'date' , time = 'time' , location = 'location' , isPrivate = 'isPrivate' WHERE EVENT_PRIMARY = 'eventCode';
+        db.execSQL("UPDATE " + EVENT_TABLE + " SET dj = '" + e.getDjId() + "' , date = '" + e.getTime() + "' , location = '" + e.getLocation() + "' , isPrivate = '" + e.getPrivate() + "' WHERE eventCode = '" + e.getEventCode() + "';");
 
         db.close();
     }
@@ -368,8 +380,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        //UPDATE ATTENDEE_TABLE SET password = 'password', WHERE ATTENDEE_PRIMARY = 'username';
-        db.execSQL("UPDATE " + ATTENDEE_TABLE + " SET password = '" + a.getPassword() + "' , WHERE " + ATTENDEE_PRIMARY + " = '" + a.getUsername() + "';");
+        //UPDATE ATTENDEE_TABLE SET firstName = 'firstName', lastName = 'lastName', password = 'password' WHERE username = 'username';
+        db.execSQL("UPDATE " + ATTENDEE_TABLE + " SET firstName = '" + a.getFirstName() + "' , lastName = '" + a.getLastName() + "' , password = '" + a.getPassword() + "' WHERE username = '" + a.getUsername() + "';");
 
         db.close();
     }
@@ -378,10 +390,146 @@ public class DatabaseHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        //UPDATE SONG_TABLE SET name = 'name' , artist = 'artist' , isExplicit = 'isExplicit' , duration = 'duration' WHERE SONG_PRIMARY = 'id';
-        db.execSQL("UPDATE " + SONG_TABLE + " SET name = '" + s.getName() + "' , artist = '" + s.getArtist() + "' , isExplicit = '" + s.getExplicit() + "' , duration = '" + s.getDuration() + "' WHERE " + SONG_PRIMARY + " =  '" + s.getId() + "';");
+        //UPDATE SONG_TABLE SET name = 'name' , artist = 'artist' , isExplicit = 'isExplicit' , duration = 'duration' WHERE songId = 'songId';
+        db.execSQL("UPDATE " + SONG_TABLE + " SET songName = '" + s.getSongName() + "' , artist = '" + s.getArtist() + "' , isExplicit = '" + s.getExplicit() + "' , duration = '" + s.getDuration() + "' WHERE songId =  '" + s.getSongId() + "';");
+
+        db.close();
+    }
+    //=================================================
+
+    //=================================================
+    //delete commands
+
+    public void deleteDj(String id)
+    {
+        //get writeable instance of database
+        SQLiteDatabase db = getWritableDatabase();
+
+        //must delete off primary key
+        //DELETE FROM DJ_TABLE WHERE djId = 'id';
+        db.execSQL("DELETE FROM " + DJ_TABLE + " WHERE djId = '" + id + "';");
+
+        //close
+        db.close();
+    }
+
+    public void deleteEvent(String code)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+
+        //DELETE FROM EVENT_TABLE WHERE eventCode = 'code';
+        db.execSQL("DELETE FROM " + EVENT_TABLE + " WHERE eventCode = '" + code + "';");
 
         db.close();
     }
 
+    public void deleteAttendee(String uName)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+
+        //DELETE FROM ATTENDEE_TABLE WHERE username = 'uName';
+        db.execSQL("DELETE FROM " + ATTENDEE_TABLE + " WHERE username = '" + uName + "';");
+
+        db.close();
+    }
+
+    public void deleteSong(String id)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+
+        //DELETE FROM SONG_TABLE WHERE songId = 'id';
+        db.execSQL("DELETE FROM " + SONG_TABLE + " WHERE songId = '" + id + "';");
+
+        db.close();
+    }
+    //=================================================
+
+    //=================================================
+    //MISC QUERIES
+    @SuppressLint("Range")
+    public ArrayList<Event> getEventsOfDj(int djId)
+    {
+        ArrayList<Event> events = new ArrayList<Event>();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM " + EVENT_TABLE + " WHERE " + EVENT_TABLE + ".djId = '" + djId + "';";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        String eventCode;
+        String date;
+        String time;
+        String location;
+        String isPrivate;
+        String isActive;
+
+        if(cursor.moveToNext())
+        {
+            do
+            {
+                eventCode = cursor.getString(cursor.getColumnIndex("eventCode"));
+                date = cursor.getString(cursor.getColumnIndex("date"));
+                time = cursor.getString(cursor.getColumnIndex("time"));
+                location = cursor.getString(cursor.getColumnIndex("location"));
+                isPrivate = cursor.getString(cursor.getColumnIndex("isPrivate"));
+                isActive = cursor.getString(cursor.getColumnIndex("isActive"));
+
+                events.add(new Event(eventCode, djId, date, time, location, isPrivate, isActive));
+            }
+            while (cursor.moveToNext());
+        }
+
+        db.close();
+
+        return events;
+    }
+
+    @SuppressLint("Range")
+    public ArrayList<Song> getSongsOfDj(int djId)
+    {
+        ArrayList<Song> songs = new ArrayList<Song>();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM " + SONG_TABLE + " WHERE " + SONG_TABLE + ".djId = '" + djId + "';";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        String songId;
+        String songName;
+        String artist;
+        String isExplicit;
+        String duration;
+
+        if (cursor.moveToNext())
+        {
+            do
+            {
+                songId = cursor.getString(cursor.getColumnIndex("songId"));
+                songName = cursor.getString(cursor.getColumnIndex("songName"));
+                artist = cursor.getString(cursor.getColumnIndex("artist"));
+                isExplicit = cursor.getString(cursor.getColumnIndex("isExplicit"));
+                duration = cursor.getString(cursor.getColumnIndex("duration"));
+
+                songs.add(new Song(songId, songName, artist, isExplicit, duration, djId));
+            }
+            while(cursor.moveToNext());
+
+
+        }
+
+        db.close();
+
+        return songs;
+    }
+    public void activateEvent(String eventCode)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.execSQL("UPDATE " + EVENT_TABLE + " SET isActive = 'true' WHERE eventCode = '" + eventCode + "';");
+
+        db.close();
+    }
+    //=================================================
 }

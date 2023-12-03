@@ -1,27 +1,31 @@
 package com.example.cis183_djsongsearch;
 
-public class Event
+import java.io.Serializable;
+
+public class Event implements Serializable
 {
     private String eventCode;
-    private String dj;
+    private int djId;
     private String date;
     private String time;
     private String location;
     private String isPrivate;
+    private String isActive;
 
     public Event()
     {
 
     }
 
-    public Event(String c, String j, String d, String t, String l, String p)
+    public Event(String c, int j, String d, String t, String l, String p, String a)
     {
         eventCode = c;
-        dj = j;
+        djId = j;
         date = d;
         time = t;
         location = l;
         isPrivate = p;
+        isActive = a;
     }
 
     public String getEventCode() {
@@ -32,12 +36,12 @@ public class Event
         eventCode = c;
     }
 
-    public String getDj() {
-        return dj;
+    public int getDjId() {
+        return djId;
     }
 
-    public void setDj(String d) {
-        dj = d;
+    public void setDjId(int d) {
+        djId = d;
     }
 
     public String getDate() {
@@ -72,5 +76,11 @@ public class Event
         isPrivate = p;
     }
 
+    public String getActive() {
+        return isActive;
+    }
 
+    public void setActive(String a) {
+        isActive = a;
+    }
 }

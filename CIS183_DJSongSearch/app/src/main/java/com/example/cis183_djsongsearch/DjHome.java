@@ -18,6 +18,7 @@ public class DjHome extends AppCompatActivity
     Intent songLibraryIntent;
     Intent djInfoIntent;
     Intent mainActivityIntent;
+    Dj dj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,6 +36,10 @@ public class DjHome extends AppCompatActivity
         djInfoIntent = new Intent(DjHome.this, DjInfo.class);
         mainActivityIntent = new Intent(DjHome.this, MainActivity.class);
 
+        Intent cameFrom = getIntent();
+
+        dj = (Dj) cameFrom.getSerializableExtra("DJ");
+
         EventsButtonEventHandler();
         SongLibraryButtonEventHandler();
         InfoButtonEventHandler();
@@ -48,6 +53,8 @@ public class DjHome extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                eventLibraryIntent.putExtra("DJ", dj);
+
                 startActivity(eventLibraryIntent);
             }
         });
@@ -60,6 +67,8 @@ public class DjHome extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                songLibraryIntent.putExtra("DJ", dj);
+
                 startActivity(songLibraryIntent);
             }
         });
@@ -72,6 +81,8 @@ public class DjHome extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                djInfoIntent.putExtra("DJ", dj);
+
                 startActivity(djInfoIntent);
             }
         });

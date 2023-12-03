@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class EventLibrary extends AppCompatActivity
 {
@@ -19,6 +22,13 @@ public class EventLibrary extends AppCompatActivity
     Intent djHomeIntent;
     Intent eventInfoIntent;
     Intent activeEventIntent;
+    DatabaseHelper dbHelper;
+    ArrayList<Event> listOfEvents;
+    ArrayList<Event> activeEvents;
+    ArrayList<Event> upcomingEvents;
+    EventLibraryListAdapter activeAdapter;
+    EventLibraryListAdapter upcomingAdapter;
+    Dj dj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,6 +46,32 @@ public class EventLibrary extends AppCompatActivity
         eventInfoIntent = new Intent(EventLibrary.this, EventInfo.class);
         activeEventIntent = new Intent(EventLibrary.this, ActiveEvent.class);
 
+        dbHelper = new DatabaseHelper(this);
+
+        Intent cameFrom = getIntent();
+
+        dj = (Dj) cameFrom.getSerializableExtra("DJ");
+
+        listOfEvents = dbHelper.getEventsOfDj(dj.getDjId());
+
+        for(int i = 0; i < listOfEvents.size(); i++)
+        {
+            if(listOfEvents.get(i).getActive().equals("true"))
+            {
+                activeEvents.add(listOfEvents.get(i));
+            }
+            else
+            {
+                upcomingEvents.add(listOfEvents.get(i));
+            }
+        }
+
+        activeAdapter = new EventLibraryListAdapter(this, activeEvents);
+        upcomingAdapter = new EventLibraryListAdapter(this, upcomingEvents);
+
+        lv_j_el_active.setAdapter(activeAdapter);
+        lv_j_el_upcoming.setAdapter(upcomingAdapter);
+
         CreateButtonEventHandler();
         BackButtonEventHandler();
         ActiveClickEventHandler();
@@ -50,6 +86,8 @@ public class EventLibrary extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                createEventIntent.putExtra("DJ", dj);
+
                 startActivity(createEventIntent);
             }
         });
@@ -62,6 +100,8 @@ public class EventLibrary extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                djHomeIntent.putExtra("DJ", dj);
+
                 startActivity(djHomeIntent);
             }
         });
@@ -74,6 +114,8 @@ public class EventLibrary extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
+                activeEventIntent.putExtra("DJ", dj);
+
                 startActivity(activeEventIntent);
             }
         });
@@ -86,6 +128,8 @@ public class EventLibrary extends AppCompatActivity
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
             {
+                eventInfoIntent.putExtra("DJ", dj);
+
                 startActivity(eventInfoIntent);
 
                 return false;
@@ -95,9 +139,15 @@ public class EventLibrary extends AppCompatActivity
 
     private void UpcomingClickEventHandler()
     {
-        lv_j_el_upcoming.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lv_j_el_upcoming.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int i, long id)
+            {
+                eventInfoIntent.putExtra("DJ", dj);
+
+                eventInfoIntent.putExtra("Event", upcomingEvents.get(i));
+
                 startActivity(eventInfoIntent);
             }
         });
@@ -108,8 +158,14 @@ public class EventLibrary extends AppCompatActivity
         lv_j_el_upcoming.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
         {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long id)
             {
+                dbHelper.activateEvent(upcomingEvents.get(i).getEventCode());
+
+                activeEventIntent.putExtra("DJ", dj);
+
+                eventInfoIntent.putExtra("Event", upcomingEvents.get(i));
+
                 startActivity(activeEventIntent);
 
                 return false;

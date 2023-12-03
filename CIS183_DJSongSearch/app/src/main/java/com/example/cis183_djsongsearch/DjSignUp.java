@@ -14,8 +14,8 @@ public class DjSignUp extends AppCompatActivity
     EditText et_j_dsu_pass;
     Button btn_j_dsu_signUp;
     Button btn_j_dsu_back;
-    Intent djHomeIntent;
     Intent djSignInIntent;
+    DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -28,8 +28,9 @@ public class DjSignUp extends AppCompatActivity
         btn_j_dsu_signUp = findViewById(R.id.btn_v_dsu_signUp);
         btn_j_dsu_back = findViewById(R.id.btn_v_dsu_back);
 
-        djHomeIntent = new Intent(DjSignUp.this, DjHome.class);
         djSignInIntent = new Intent(DjSignUp.this, DjSignIn.class);
+
+        dbHelper = new DatabaseHelper(this);
 
         SignUpButtonEventHandler();
         BackButtonEventHandler();
@@ -42,7 +43,11 @@ public class DjSignUp extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                startActivity(djHomeIntent);
+                Dj dj = new Dj(et_j_dsu_dName.getText().toString(),et_j_dsu_pass.getText().toString());
+
+                dbHelper.addNewDJ(dj);
+
+                startActivity(djSignInIntent);
             }
         });
     }

@@ -84,4 +84,14 @@
         android:text="Back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_v_dsi_signIn" />
+
+    <TextView
+        android:id="@+id/tv_v_dsi_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Invalid DJ name or password."
+        android:textColor="?attr/colorError"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="113dp"
+        tools:layout_editor_absoluteY="376dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

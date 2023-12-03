@@ -13,9 +13,11 @@ public class Attendee
 
     }
 
-    public Attendee(String u, String p)
+    public Attendee(String u, String f, String l, String p)
     {
         username = u;
+        fName = f;
+        lName = l;
         password = p;
     }
 
@@ -27,6 +29,22 @@ public class Attendee
         username = u;
     }
 
+    public String getFirstName() {
+        return fName;
+    }
+
+    public void setFirstName(String f) {
+        fName = f;
+    }
+
+    public String getLastName() {
+        return lName;
+    }
+
+    public void setLastName(String l) {
+        lName = l;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -34,4 +52,12 @@ public class Attendee
     public void setPassword(String p) {
         password = p;
     }
+    public String getEventCode() {
+        return eventCode;
+    }
+
+    public void setEventCode(String e) {
+        eventCode = e;
+    }
+
 }

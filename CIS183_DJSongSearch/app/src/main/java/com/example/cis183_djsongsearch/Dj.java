@@ -1,28 +1,36 @@
 package com.example.cis183_djsongsearch;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Dj
+
+public class Dj implements Serializable
 {
-    private int id;
+    private int djId;
     private String djName;
     private String password;
 
-    public Dj(int i, String n, String p)
+    public Dj(String n, String p)
     {
-        id = i;
         djName = n;
         password = p;
     }
 
-    public int getId()
+    public Dj(int i, String n, String p)
     {
-        return id;
+        djId = i;
+        djName = n;
+        password = p;
     }
 
-    public void setId(int i)
+    public int getDjId()
     {
-        id = i;
+        return djId;
+    }
+
+    public void setDjId(int i)
+    {
+        djId = i;
     }
 
     public String getDjName()

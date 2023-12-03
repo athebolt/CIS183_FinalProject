@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity
     Button btn_j_ma_attendeeSignIn;
     Intent djSignInIntent;
     Intent attendeeSignInIntent;
+    DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -25,6 +26,11 @@ public class MainActivity extends AppCompatActivity
 
         djSignInIntent = new Intent(MainActivity.this, DjSignIn.class);
         attendeeSignInIntent = new Intent(MainActivity.this, AttendeeSignIn.class);
+
+        dbHelper = new DatabaseHelper(this);
+
+        //if any rows are empty, not anymore
+        dbHelper.initializeDB();
 
         dJSignInButtonEventHandler();
         attendeeSignInButtonEventHandler();
