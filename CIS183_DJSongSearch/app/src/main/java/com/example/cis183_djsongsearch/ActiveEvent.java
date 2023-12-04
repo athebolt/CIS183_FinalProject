@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 public class ActiveEvent extends AppCompatActivity
 {
     Button btn_j_ae_back;
@@ -16,6 +18,11 @@ public class ActiveEvent extends AppCompatActivity
     ListView lv_j_ae_reqSongs;
     Intent eventLibraryIntent;
     Intent songInfoIntent;
+    Dj dj;
+    Event event;
+    DatabaseHelper dbHelper;
+    ArrayList<Song> listOfSongs;
+    SongLibraryListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,6 +36,19 @@ public class ActiveEvent extends AppCompatActivity
 
         eventLibraryIntent = new Intent(ActiveEvent.this, EventLibrary.class);
         songInfoIntent = new Intent(ActiveEvent.this, SongInfo.class);
+
+        dbHelper = new DatabaseHelper(this);
+
+        adapter = new SongLibraryListAdapter(this, listOfSongs);
+
+        lv_j_ae_reqSongs.setAdapter(adapter);
+
+        Intent cameFrom = getIntent();
+
+        dj = (Dj) cameFrom.getSerializableExtra("DJ");
+        event = (Event) cameFrom.getSerializableExtra("Event");
+
+        
 
         BackButtonEventHandler();
         EndButtonEventHandler();
@@ -55,7 +75,11 @@ public class ActiveEvent extends AppCompatActivity
            @Override
            public void onClick(View v)
            {
-                startActivity(eventLibraryIntent);
+               dbHelper.deleteEvent(event.getEventCode());
+
+               eventLibraryIntent.putExtra("DJ", dj);
+
+               startActivity(eventLibraryIntent);
            }
        });
     }
@@ -65,8 +89,12 @@ public class ActiveEvent extends AppCompatActivity
         lv_j_ae_reqSongs.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            public void onItemClick(AdapterView<?> parent, View view, int i, long id)
             {
+                songInfoIntent.putExtra("DJ", dj);
+                songInfoIntent.putExtra("Event", event);
+                songInfoIntent.putExtra("Song", listOfSongs.get(i));
+
                 startActivity(songInfoIntent);
             }
         });
@@ -77,8 +105,10 @@ public class ActiveEvent extends AppCompatActivity
         lv_j_ae_reqSongs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
         {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long id)
             {
+                listOfSongs.remove(i);
+
                 return false;
             }
         });

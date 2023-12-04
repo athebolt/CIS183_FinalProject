@@ -112,9 +112,11 @@ public class EventLibrary extends AppCompatActivity
         lv_j_el_active.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            public void onItemClick(AdapterView<?> parent, View view, int i, long id)
             {
                 activeEventIntent.putExtra("DJ", dj);
+
+                activeEventIntent.putExtra("Event", activeEvents.get(i));
 
                 startActivity(activeEventIntent);
             }
@@ -126,9 +128,11 @@ public class EventLibrary extends AppCompatActivity
         lv_j_el_active.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
         {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long id)
             {
                 eventInfoIntent.putExtra("DJ", dj);
+
+                eventInfoIntent.putExtra("DJ", activeEvents.get(i));
 
                 startActivity(eventInfoIntent);
 
