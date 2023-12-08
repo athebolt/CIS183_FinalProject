@@ -4,94 +4,151 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".DjSignIn">
 
-    <TextView
-        android:id="@+id/tv_v_dsi_title"
+    <ImageView
+        android:id="@+id/imageView71"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="97dp"
-        android:text="DJ Sign In"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/rectangle_1" />
+
+    <ImageView
+        android:id="@+id/imageView77"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="192dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dj" />
+
+    <ImageView
+        android:id="@+id/imageView80"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView71"
+        app:srcCompat="@drawable/sign_in_dj_name__pass_" />
+
+    <ImageView
+        android:id="@+id/imageView81"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="84dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView80"
+        app:layout_constraintTop_toBottomOf="@+id/imageView71"
+        app:srcCompat="@drawable/rectangle_14" />
+
+    <ImageView
+        android:id="@+id/imageView82"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="135dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView80"
+        app:layout_constraintTop_toBottomOf="@+id/imageView71"
+        app:srcCompat="@drawable/rectangle_14" />
 
     <EditText
-        android:id="@+id/et_v_dsi_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="195dp"
+        android:id="@+id/et_v_dsi_dName"
+        android:layout_width="172dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="84dp"
         android:ems="10"
         android:inputType="text"
-        app:layout_constraintStart_toEndOf="@+id/tv_v_dsi_name"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imageView80"
+        app:layout_constraintTop_toBottomOf="@+id/imageView71" />
 
     <EditText
         android:id="@+id/et_v_dsi_pass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="46dp"
+        android:layout_width="172dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="134dp"
         android:ems="10"
         android:inputType="text"
-        app:layout_constraintStart_toEndOf="@+id/tv_v_dsi_pass"
-        app:layout_constraintTop_toBottomOf="@+id/et_v_dsi_name" />
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imageView80"
+        app:layout_constraintTop_toBottomOf="@+id/imageView71" />
 
-    <TextView
-        android:id="@+id/tv_v_dsi_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:text="DJ Name:"
-        app:layout_constraintBaseline_toBaselineOf="@+id/et_v_dsi_name"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_v_dsi_pass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:text="Password:"
-        app:layout_constraintBaseline_toBaselineOf="@+id/et_v_dsi_pass"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btn_v_dsi_signIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:text="Sign In"
-        app:layout_constraintBottom_toTopOf="@+id/btn_v_dsi_signUp"
-        app:layout_constraintStart_toEndOf="@+id/btn_v_dsi_signUp" />
-
-    <Button
+    <ImageButton
         android:id="@+id/btn_v_dsi_signUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="58dp"
-        android:layout_marginBottom="172dp"
-        android:text="Sign Up"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginStart="11dp"
+        android:layout_marginBottom="7dp"
+        android:background="@android:drawable/divider_horizontal_bright"
+        app:layout_constraintBottom_toTopOf="@+id/btn_v_dsi_signIn"
+        app:layout_constraintStart_toEndOf="@+id/imageView80"
+        app:srcCompat="@drawable/new_user__sign_up_" />
 
-    <Button
-        android:id="@+id/btn_v_dsi_back"
+    <ImageButton
+        android:id="@+id/btn_v_dsi_signIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="68dp"
-        android:text="Back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_v_dsi_signIn" />
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:drawable/divider_horizontal_bright"
+        app:layout_constraintEnd_toEndOf="@+id/et_v_dsi_pass"
+        app:layout_constraintTop_toBottomOf="@+id/et_v_dsi_pass"
+        app:srcCompat="@drawable/rectangle_29" />
+
+    <ImageView
+        android:id="@+id/imageView83"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/btn_v_dsi_signUp"
+        app:layout_constraintTop_toTopOf="@+id/btn_v_dsi_signIn"
+        app:srcCompat="@drawable/sign_in" />
+
+    <ImageButton
+        android:id="@+id/btn_v_dsi_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:drawable/presence_invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ellipse_9" />
+
+    <ImageView
+        android:id="@+id/imageView84"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_v_dsi_home"
+        app:layout_constraintEnd_toEndOf="@+id/btn_v_dsi_home"
+        app:srcCompat="@drawable/home_circle_icon_137496_8" />
 
     <TextView
         android:id="@+id/tv_v_dsi_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Invalid DJ name or password."
-        android:textColor="?attr/colorError"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="14dp"
+        android:text="Invalid Username or Password"
+        android:textColor="@color/design_default_color_error"
+        android:textSize="16sp"
         android:visibility="invisible"
-        tools:layout_editor_absoluteX="113dp"
-        tools:layout_editor_absoluteY="376dp" />
+        app:layout_constraintStart_toStartOf="@+id/btn_v_dsi_signIn"
+        app:layout_constraintTop_toBottomOf="@+id/btn_v_dsi_signIn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

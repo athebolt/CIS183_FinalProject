@@ -6,11 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity
 {
-    Button btn_j_ma_djSignIn;
-    Button btn_j_ma_attendeeSignIn;
+    ImageButton btn_j_ma_djSignIn;
+    ImageButton btn_j_ma_attendeeSignIn;
     Intent djSignInIntent;
     Intent attendeeSignInIntent;
     DatabaseHelper dbHelper;

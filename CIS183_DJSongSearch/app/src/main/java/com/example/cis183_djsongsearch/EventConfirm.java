@@ -6,15 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class EventConfirm extends AppCompatActivity
 {
     TextView tv_j_ec_dj;
-    Button btn_j_ec_no;
-    Button btn_j_ec_yes;
+    ImageButton btn_j_ec_n;
+    ImageButton btn_j_ec_y;
     Intent eventSearchIntent;
     Intent requestSongIntent;
+    DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -23,11 +25,15 @@ public class EventConfirm extends AppCompatActivity
         setContentView(R.layout.activity_event_confirm);
 
         tv_j_ec_dj = findViewById(R.id.tv_v_ec_dj);
-        btn_j_ec_no = findViewById(R.id.btn_v_ec_no);
-        btn_j_ec_yes = findViewById(R.id.btn_v_ec_yes);
+        btn_j_ec_n = findViewById(R.id.btn_v_ec_n);
+        btn_j_ec_y = findViewById(R.id.btn_v_ec_y);
 
         eventSearchIntent = new Intent(EventConfirm.this, EventSearch.class);
         requestSongIntent = new Intent(EventConfirm.this, RequestSong.class);
+
+        dbHelper = new DatabaseHelper(this);
+
+        tv_j_ec_dj.setText(dbHelper.getDjOfEvent(AppData.getCurEvent().getEventCode()));
 
         NoButtonEventHandler();
         YesButtonEventHandler();
@@ -35,7 +41,7 @@ public class EventConfirm extends AppCompatActivity
 
     private void NoButtonEventHandler()
     {
-        btn_j_ec_no.setOnClickListener(new View.OnClickListener()
+        btn_j_ec_n.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -47,7 +53,7 @@ public class EventConfirm extends AppCompatActivity
 
     private void YesButtonEventHandler()
     {
-        btn_j_ec_yes.setOnClickListener(new View.OnClickListener()
+        btn_j_ec_y.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)

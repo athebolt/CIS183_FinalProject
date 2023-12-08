@@ -48,7 +48,6 @@ public class SongLibraryListAdapter extends BaseAdapter
 
         TextView name = view.findViewById(R.id.tv_v_slcc_name);
         TextView artist = view.findViewById(R.id.tv_v_slcc_artist);
-        TextView explicit = view.findViewById(R.id.tv_v_slcc_explicit);
         TextView duration = view.findViewById(R.id.tv_v_slcc_duration);
 
         Song song = listOfSongs.get(i);
@@ -56,11 +55,6 @@ public class SongLibraryListAdapter extends BaseAdapter
         name.setText(song.getSongName());
         artist.setText(song.getArtist());
         duration.setText(song.getDuration());
-
-        if(song.getExplicit().equals("true"))
-        {
-            explicit.setVisibility(View.VISIBLE);
-        }
 
         return view;
     }

@@ -7,21 +7,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class DjSignIn extends AppCompatActivity
 {
-    TextView tv_j_dsi_title;
-    TextView tv_j_dsi_name;
-    TextView tv_j_dsi_pass;
     TextView tv_j_dsi_error;
-    EditText et_j_dsi_name;
+    EditText et_j_dsi_dName;
     EditText et_j_dsi_pass;
-    Button btn_j_dsi_signIn;
-    Button btn_j_dsi_signUp;
-    Button btn_j_dsi_back;
+    ImageButton btn_j_dsi_signIn;
+    ImageButton btn_j_dsi_signUp;
+    ImageButton btn_j_dsi_home;
     Intent mainActivityIntent;
     Intent djSignUpIntent;
     Intent djHomeIntent;
@@ -34,15 +32,12 @@ public class DjSignIn extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dj_sign_in);
 
-        tv_j_dsi_title = findViewById(R.id.tv_v_dsi_title);
-        tv_j_dsi_name = findViewById(R.id.tv_v_dsi_name);
-        tv_j_dsi_pass = findViewById(R.id.tv_v_dsi_pass);
         tv_j_dsi_error = findViewById(R.id.tv_v_dsi_error);
-        et_j_dsi_name = findViewById(R.id.et_v_dsi_name);
+        et_j_dsi_dName = findViewById(R.id.et_v_dsi_dName);
         et_j_dsi_pass = findViewById(R.id.et_v_dsi_pass);
         btn_j_dsi_signIn = findViewById(R.id.btn_v_dsi_signIn);
         btn_j_dsi_signUp = findViewById(R.id.btn_v_dsi_signUp);
-        btn_j_dsi_back = findViewById(R.id.btn_v_dsi_back);
+        btn_j_dsi_home = findViewById(R.id.btn_v_dsi_home);
 
         mainActivityIntent = new Intent(DjSignIn.this, MainActivity.class);
         djSignUpIntent = new Intent(DjSignIn.this, DjSignUp.class);
@@ -52,7 +47,7 @@ public class DjSignIn extends AppCompatActivity
 
         signInButtonEventHandler();
         signUpButtonEventHandler();
-        backButtonEventHandler();
+        homeButtonEventHandler();
     }
 
     public void signInButtonEventHandler()
@@ -66,20 +61,23 @@ public class DjSignIn extends AppCompatActivity
 
                 listOfDjs = dbHelper.getAllDjs();
 
-                while(!et_j_dsi_name.getText().toString().equals(listOfDjs.get(i).getDjName()) && i < listOfDjs.size())
+                while(i < listOfDjs.size())
                 {
+                    if(!et_j_dsi_dName.getText().toString().equals(listOfDjs.get(i).getDjName()))
+                    {
+                        if(et_j_dsi_pass.getText().toString().equals(listOfDjs.get(i).getPassword()))
+                        {
+                            AppData.setUser(listOfDjs.get(i));
+
+                            startActivity(djHomeIntent);
+                        }
+                    }
+
                     i++;
                 }
 
-                if(et_j_dsi_pass.getText().toString().equals(listOfDjs.get(i).getPassword()))
-                {
-                    djHomeIntent.putExtra("DJ",listOfDjs.get(i));
-
-                    startActivity(djHomeIntent);
-                }
-
                 tv_j_dsi_error.setVisibility(View.VISIBLE);
-                et_j_dsi_name.setText("");
+                et_j_dsi_dName.setText("");
                 et_j_dsi_pass.setText("");
             }
         });
@@ -97,9 +95,9 @@ public class DjSignIn extends AppCompatActivity
         });
     }
 
-    public void backButtonEventHandler()
+    public void homeButtonEventHandler()
     {
-        btn_j_dsi_back.setOnClickListener(new View.OnClickListener()
+        btn_j_dsi_home.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)

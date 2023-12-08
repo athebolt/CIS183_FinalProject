@@ -8,14 +8,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 public class EventLibrary extends AppCompatActivity
 {
-    Button btn_j_el_create;
-    Button btn_j_el_back;
+    ImageButton btn_j_el_create;
+    ImageButton btn_j_el_home;
+    ImageButton btn_j_el_back;
     ListView lv_j_el_active;
     ListView lv_j_el_upcoming;
     Intent createEventIntent;
@@ -28,7 +30,6 @@ public class EventLibrary extends AppCompatActivity
     ArrayList<Event> upcomingEvents;
     EventLibraryListAdapter activeAdapter;
     EventLibraryListAdapter upcomingAdapter;
-    Dj dj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,6 +38,7 @@ public class EventLibrary extends AppCompatActivity
         setContentView(R.layout.activity_event_library);
 
         btn_j_el_create = findViewById(R.id.btn_v_el_create);
+        btn_j_el_home = findViewById(R.id.btn_v_el_home);
         btn_j_el_back = findViewById(R.id.btn_v_el_back);
         lv_j_el_active = findViewById(R.id.lv_v_el_active);
         lv_j_el_upcoming = findViewById(R.id.lv_v_el_upcoming);
@@ -48,11 +50,7 @@ public class EventLibrary extends AppCompatActivity
 
         dbHelper = new DatabaseHelper(this);
 
-        Intent cameFrom = getIntent();
-
-        dj = (Dj) cameFrom.getSerializableExtra("DJ");
-
-        listOfEvents = dbHelper.getEventsOfDj(dj.getDjId());
+        listOfEvents = dbHelper.getEventsOfDj(AppData.getUser().getDjId());
 
         for(int i = 0; i < listOfEvents.size(); i++)
         {
@@ -86,8 +84,6 @@ public class EventLibrary extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                createEventIntent.putExtra("DJ", dj);
-
                 startActivity(createEventIntent);
             }
         });
@@ -100,8 +96,6 @@ public class EventLibrary extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                djHomeIntent.putExtra("DJ", dj);
-
                 startActivity(djHomeIntent);
             }
         });
@@ -114,9 +108,7 @@ public class EventLibrary extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long id)
             {
-                activeEventIntent.putExtra("DJ", dj);
-
-                activeEventIntent.putExtra("Event", activeEvents.get(i));
+                AppData.setCurEvent(activeEvents.get(i));
 
                 startActivity(activeEventIntent);
             }
@@ -130,9 +122,8 @@ public class EventLibrary extends AppCompatActivity
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long id)
             {
-                eventInfoIntent.putExtra("DJ", dj);
+                AppData.setCurEvent(activeEvents.get(i));
 
-                eventInfoIntent.putExtra("DJ", activeEvents.get(i));
 
                 startActivity(eventInfoIntent);
 
@@ -148,9 +139,7 @@ public class EventLibrary extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long id)
             {
-                eventInfoIntent.putExtra("DJ", dj);
-
-                eventInfoIntent.putExtra("Event", upcomingEvents.get(i));
+                AppData.setCurEvent(upcomingEvents.get(i));
 
                 startActivity(eventInfoIntent);
             }
@@ -166,9 +155,7 @@ public class EventLibrary extends AppCompatActivity
             {
                 dbHelper.activateEvent(upcomingEvents.get(i).getEventCode());
 
-                activeEventIntent.putExtra("DJ", dj);
-
-                eventInfoIntent.putExtra("Event", upcomingEvents.get(i));
+                AppData.setCurEvent(upcomingEvents.get(i));
 
                 startActivity(activeEventIntent);
 

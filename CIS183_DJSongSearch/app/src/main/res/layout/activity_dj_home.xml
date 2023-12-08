@@ -4,66 +4,116 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".DjHome">
 
-    <TextView
-        android:id="@+id/textView36"
+    <ImageView
+        android:id="@+id/imageView61"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="DJ Home"
-        android:textSize="24sp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/rectangle_1" />
+
+    <ImageView
+        android:id="@+id/imageView62"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dj_home" />
+
+    <ImageButton
+        android:id="@+id/btn_v_dh_events"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="193dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="21dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_v_dh_songLib"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/rectangle_15" />
 
-    <TextView
-        android:id="@+id/textView37"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginBottom="37dp"
-        android:text="Go to"
-        app:layout_constraintBottom_toTopOf="@+id/btn_v_dh_events"
-        app:layout_constraintStart_toStartOf="@+id/btn_v_dh_events" />
-
-    <Button
-        android:id="@+id/btn_v_dh_events"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="37dp"
-        android:text="Events"
-        app:layout_constraintBottom_toTopOf="@+id/btn_v_dh_songLib"
-        app:layout_constraintEnd_toEndOf="@+id/btn_v_dh_songLib" />
-
-    <Button
+    <ImageButton
         android:id="@+id/btn_v_dh_songLib"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="330dp"
-        android:text="Song Library"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="307dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_v_dh_djInfo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_v_dh_events"
+        app:srcCompat="@drawable/rectangle_15" />
 
-    <Button
-        android:id="@+id/btn_v_dh_info"
+    <ImageView
+        android:id="@+id/imageView67"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="22dp"
-        android:text="Info"
-        app:layout_constraintStart_toStartOf="@+id/btn_v_dh_songLib"
-        app:layout_constraintTop_toBottomOf="@+id/btn_v_dh_songLib" />
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="216dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/events" />
 
-    <Button
-        android:id="@+id/btn_v_dh_signOut"
+    <ImageView
+        android:id="@+id/imageView68"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="113dp"
-        android:text="Sign Out"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="300dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/song_library" />
+
+    <ImageButton
+        android:id="@+id/btn_v_dh_djInfo"
+        android:layout_width="237dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="145dp"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_v_dh_songLib"
+        app:srcCompat="@drawable/rectangle_29" />
+
+    <ImageButton
+        android:id="@+id/btn_v_dh_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="22dp"
+        android:background="@android:drawable/presence_invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ellipse_9" />
+
+    <ImageView
+        android:id="@+id/imageView70"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/home_circle_icon_137496_8" />
+
+    <ImageView
+        android:id="@+id/imageView72"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="216dp"
+        android:layout_marginBottom="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/my_profile__1_" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

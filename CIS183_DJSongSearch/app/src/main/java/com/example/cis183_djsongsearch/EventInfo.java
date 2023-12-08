@@ -8,21 +8,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class EventInfo extends AppCompatActivity
 {
     TextView tv_j_ei_code;
+    TextView tv_j_ei_privateY;
+    TextView tv_j_ei_privateN;
     EditText et_j_ei_date;
     EditText et_j_ei_time;
     EditText et_j_ei_location;
-    CheckBox cb_j_ei_private;
-    Button btn_j_ei_update;
-    Button btn_j_ei_delete;
+    ImageButton btn_j_ei_privateY;
+    ImageButton btn_j_ei_privateN;
+    ImageButton btn_j_ei_update;
+    ImageButton btn_j_ei_delete;
     Intent eventLibraryIntent;
-    Dj dj;
-    Event event;
     DatabaseHelper dbHelper;
+    Boolean isPrivate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,10 +34,13 @@ public class EventInfo extends AppCompatActivity
         setContentView(R.layout.activity_event_info);
 
         tv_j_ei_code = findViewById(R.id.tv_v_ei_code);
+        tv_j_ei_privateY = findViewById(R.id.tv_v_ei_privateY);
+        tv_j_ei_privateN = findViewById(R.id.tv_v_ei_priavteN);
         et_j_ei_date = findViewById(R.id.et_v_ei_date);
         et_j_ei_time = findViewById(R.id.et_v_ei_time);
+        btn_j_ei_privateY = findViewById(R.id.btn_v_ei_privateY);
+        btn_j_ei_privateN = findViewById(R.id.btn_v_ei_privateN);
         et_j_ei_location = findViewById(R.id.et_v_ei_location);
-        cb_j_ei_private = findViewById(R.id.cb_v_ei_private);
         btn_j_ei_update = findViewById(R.id.btn_v_ei_update);
         btn_j_ei_delete = findViewById(R.id.btn_v_ei_delete);
 
@@ -42,24 +48,57 @@ public class EventInfo extends AppCompatActivity
 
         dbHelper = new DatabaseHelper(this);
 
-        Intent cameFrom = getIntent();
+        isPrivate = null;
 
-        dj = (Dj) cameFrom.getSerializableExtra("DJ");
+        tv_j_ei_code.setText(AppData.getCurEvent().getEventCode());
+        et_j_ei_date.setText(AppData.getCurEvent().getDate());
+        et_j_ei_time.setText(AppData.getCurEvent().getTime());
+        et_j_ei_location.setText(AppData.getCurEvent().getLocation());
 
-        event = (Event) cameFrom.getSerializableExtra("Event");
-
-        tv_j_ei_code.setText(event.getEventCode());
-        et_j_ei_date.setText(event.getDate());
-        et_j_ei_time.setText(event.getTime());
-        et_j_ei_location.setText(event.getLocation());
-
-        if(event.getPrivate().equals("true"))
+        if(AppData.getCurEvent().getPrivate().equals("true"))
         {
-            cb_j_ei_private.setChecked(true);
+            tv_j_ei_privateY.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            tv_j_ei_privateN.setVisibility(View.VISIBLE);
         }
 
+        PrivateYButtonEventHandler();
+        PrivateNButtonEventHandler();
         UpdateButtonEventHandler();
         DeleteButtonEventHandler();
+    }
+
+    private void PrivateYButtonEventHandler()
+    {
+        btn_j_ei_privateY.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                isPrivate = true;
+
+                tv_j_ei_privateY.setVisibility(View.VISIBLE);
+                tv_j_ei_privateN.setVisibility(View.INVISIBLE);
+
+            }
+        });
+    }
+
+    private void PrivateNButtonEventHandler()
+    {
+        btn_j_ei_privateN.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                isPrivate = false;
+
+                tv_j_ei_privateY.setVisibility(View.INVISIBLE);
+                tv_j_ei_privateN.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void UpdateButtonEventHandler()
@@ -69,18 +108,10 @@ public class EventInfo extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                String priv = "false";
 
-                if(cb_j_ei_private.isChecked())
-                {
-                    priv = "true";
-                }
-
-                Event updatedEvent = new Event(event.getEventCode(), dj.getDjId(), et_j_ei_date.getText().toString(), et_j_ei_time.getText().toString(), et_j_ei_location.getText().toString(), priv,null);
+                Event updatedEvent = new Event(AppData.getCurEvent().getEventCode(), AppData.getUser().getDjId(), et_j_ei_date.getText().toString(), et_j_ei_time.getText().toString(), et_j_ei_location.getText().toString(), isPrivate.toString(), null);
 
                 dbHelper.updateEvent(updatedEvent);
-
-                eventLibraryIntent.putExtra("DJ", dj);
 
                 startActivity(eventLibraryIntent);
             }
@@ -94,9 +125,7 @@ public class EventInfo extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                dbHelper.deleteEvent(event.getEventCode());
-
-                eventLibraryIntent.putExtra("DJ", dj);
+                dbHelper.deleteEvent(AppData.getCurEvent().getEventCode());
 
                 startActivity(eventLibraryIntent);
             }

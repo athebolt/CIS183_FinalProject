@@ -4,59 +4,146 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DjInfo">
+    android:background="@drawable/background"
+    tools:context=".DjInfo" >
 
-    <TextView
-        android:id="@+id/textView38"
+    <ImageView
+        android:id="@+id/imageView66"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:text="Info"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/rectangle_1" />
 
-    <TextView
-        android:id="@+id/textView39"
+    <ImageView
+        android:id="@+id/imageView69"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="138dp"
-        android:layout_marginEnd="56dp"
-        android:text="DJ Name:"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView38"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/my_profile" />
 
-    <TextView
-        android:id="@+id/textView41"
+    <ImageView
+        android:id="@+id/imageView73"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
-        android:text="Password:"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/textView39"
-        app:layout_constraintTop_toBottomOf="@+id/textView39" />
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView66"
+        app:srcCompat="@drawable/dj_name__pass_" />
 
-    <Button
-        android:id="@+id/btn_v_di_update"
+    <ImageView
+        android:id="@+id/imageView74"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="57dp"
-        android:text="Update"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btn_v_di_delete"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView73"
+        app:layout_constraintTop_toBottomOf="@+id/imageView66"
+        app:srcCompat="@drawable/rectangle_14" />
 
-    <Button
+    <ImageView
+        android:id="@+id/imageView75"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="91dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView73"
+        app:layout_constraintTop_toBottomOf="@+id/imageView66"
+        app:srcCompat="@drawable/rectangle_14" />
+
+    <ImageButton
         android:id="@+id/btn_v_di_delete"
+        android:layout_width="256dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="92dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/rectangle_29" />
+
+    <ImageButton
+        android:id="@+id/btn_v_di_update"
+        android:layout_width="256dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="92dp"
+        android:layout_marginBottom="176dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/rectangle_29" />
+
+    <ImageView
+        android:id="@+id/imageView76"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="289dp"
-        android:layout_marginEnd="82dp"
-        android:text="Delete"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="152dp"
+        android:layout_marginBottom="112dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/delete_profile" />
+
+    <EditText
+        android:id="@+id/et_v_di_name"
+        android:layout_width="167dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="48dp"
+        android:ems="10"
+        android:inputType="text"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imageView73"
+        app:layout_constraintTop_toBottomOf="@+id/imageView66" />
+
+    <EditText
+        android:id="@+id/et_v_di_pass"
+        android:layout_width="167dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="93dp"
+        android:ems="10"
+        android:inputType="text"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imageView73"
+        app:layout_constraintTop_toBottomOf="@+id/imageView66" />
+
+    <ImageButton
+        android:id="@+id/btn_v_di_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="22dp"
+        android:background="@android:drawable/presence_invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ellipse_9" />
+
+    <ImageView
+        android:id="@+id/imageView78"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/home_circle_icon_137496_8" />
+
+    <ImageView
+        android:id="@+id/imageView79"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="188dp"
+        android:layout_marginBottom="188dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/update" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

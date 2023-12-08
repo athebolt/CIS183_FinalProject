@@ -3,22 +3,20 @@ package com.example.cis183_djsongsearch;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 public class DjHome extends AppCompatActivity
 {
-    Button btn_j_dh_events;
-    Button btn_j_dh_songLib;
-    Button btn_j_dh_info;
-    Button btn_j_dh_signOut;
+    ImageButton btn_j_dh_events;
+    ImageButton btn_j_dh_songLib;
+    ImageButton btn_j_dh_djInfo;
+    ImageButton btn_j_dh_home;
     Intent eventLibraryIntent;
     Intent songLibraryIntent;
     Intent djInfoIntent;
     Intent mainActivityIntent;
-    Dj dj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -28,17 +26,13 @@ public class DjHome extends AppCompatActivity
 
         btn_j_dh_events = findViewById(R.id.btn_v_dh_events);
         btn_j_dh_songLib = findViewById(R.id.btn_v_dh_songLib);
-        btn_j_dh_info = findViewById(R.id.btn_v_dh_info);
-        btn_j_dh_signOut = findViewById(R.id.btn_v_dh_signOut);
+        btn_j_dh_djInfo = findViewById(R.id.btn_v_dh_djInfo);
+        btn_j_dh_home = findViewById(R.id.btn_v_dh_home);
 
         eventLibraryIntent = new Intent(DjHome.this, EventLibrary.class);
         songLibraryIntent = new Intent(DjHome.this, SongLibrary.class);
         djInfoIntent = new Intent(DjHome.this, DjInfo.class);
         mainActivityIntent = new Intent(DjHome.this, MainActivity.class);
-
-        Intent cameFrom = getIntent();
-
-        dj = (Dj) cameFrom.getSerializableExtra("DJ");
 
         EventsButtonEventHandler();
         SongLibraryButtonEventHandler();
@@ -53,8 +47,6 @@ public class DjHome extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                eventLibraryIntent.putExtra("DJ", dj);
-
                 startActivity(eventLibraryIntent);
             }
         });
@@ -67,8 +59,6 @@ public class DjHome extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                songLibraryIntent.putExtra("DJ", dj);
-
                 startActivity(songLibraryIntent);
             }
         });
@@ -76,13 +66,11 @@ public class DjHome extends AppCompatActivity
 
     private void InfoButtonEventHandler()
     {
-        btn_j_dh_info.setOnClickListener(new View.OnClickListener()
+        btn_j_dh_djInfo.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                djInfoIntent.putExtra("DJ", dj);
-
                 startActivity(djInfoIntent);
             }
         });
@@ -90,7 +78,7 @@ public class DjHome extends AppCompatActivity
 
     private void SignOutButtonEventHandler()
     {
-        btn_j_dh_signOut.setOnClickListener(new View.OnClickListener()
+        btn_j_dh_home.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)

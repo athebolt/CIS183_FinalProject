@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Song implements Serializable
 {
-    private String songId;
+    private int songId;
     private String songName;
     private String artist;
     private String isExplicit;
@@ -15,7 +15,7 @@ public class Song implements Serializable
     {
 
     }
-    public Song(String i, String n, String a, String e, String d, int j)
+    public Song(int i, String n, String a, String e, String d, int j)
     {
         songId = i;
         songName = n;
@@ -25,12 +25,21 @@ public class Song implements Serializable
         djId = j;
     }
 
-    public String getSongId()
+    public Song(String n, String a, String e, String d, int j)
+    {
+        songName = n;
+        artist = a;
+        isExplicit = e;
+        duration = d;
+        djId = j;
+    }
+
+    public int getSongId()
     {
         return songId;
     }
 
-    public void setSongId(String i)
+    public void setSongId(int i)
     {
         songId = i;
     }

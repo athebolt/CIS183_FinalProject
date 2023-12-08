@@ -19,7 +19,6 @@ public class SongLibrary extends AppCompatActivity
     Intent songInfoIntent;
     Intent createSongIntent;
     Intent djHomeIntent;
-    Dj dj;
     DatabaseHelper dbHelper;
     ArrayList<Song> songs;
     SongLibraryListAdapter adapter;
@@ -40,11 +39,7 @@ public class SongLibrary extends AppCompatActivity
 
         dbHelper = new DatabaseHelper(this);
 
-        Intent cameFrom = getIntent();
-
-        dj = (Dj) cameFrom.getSerializableExtra("DJ");
-
-        songs = dbHelper.getSongsOfDj(dj.getDjId());
+        songs = dbHelper.getSongsOfDj(AppData.getUser().getDjId());
 
         adapter = new SongLibraryListAdapter(this, songs);
 

@@ -34,10 +34,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
         //Attendee - username text (primary) not null, firstName text, lastName text, password text, eventCode text (foreign)
         //Song - SongId int (primary) auto, songName text, artist text, isExplicit text, duration text, djId int (foreign)
 
-        db.execSQL("CREATE TABLE " + DJ_TABLE + "( djId INT PRIMARY KEY AUTOINCREMENT, djName TEXT, password TEXT);");
-        db.execSQL("CREATE TABLE " + EVENT_TABLE + " ( eventCode TEXT PRIMARY KEY NOT NULL, djId INT, date TEXT, time TEXT, location TEXT, isPrivate TEXT, isActive TEXT, FOREIGN KEY (djId) REFERENCES " + DJ_TABLE + " (djId) );");
+        db.execSQL("CREATE TABLE " + DJ_TABLE + "( djId INTEGER PRIMARY KEY AUTOINCREMENT, djName TEXT, password TEXT);");
+        db.execSQL("CREATE TABLE " + EVENT_TABLE + " ( eventCode TEXT PRIMARY KEY NOT NULL, djId INTEGER, date TEXT, time TEXT, location TEXT, isPrivate TEXT, isActive TEXT, FOREIGN KEY (djId) REFERENCES " + DJ_TABLE + " (djId) );");
         db.execSQL("CREATE TABLE " + ATTENDEE_TABLE + " (username TEXT PRIMARY KEY NOT NULL, firstName TEXT, lastName TEXT, password TEXT, eventCode TEXT, FOREIGN KEY (eventCode) REFERENCES " + EVENT_TABLE + " (eventCode) );");
-        db.execSQL("CREATE TABLE " + SONG_TABLE + " (songId INT PRIMARY KEY AUTOINCREMENT, songName TEXT, artist TEXT, isExplicit TEXT, duration TEXT, djId INT, FOREIGN KEY (djId) REFERENCES " + DJ_TABLE + " (djId) );");
+        db.execSQL("CREATE TABLE " + SONG_TABLE + " (songId INTEGER PRIMARY KEY AUTOINCREMENT, songName TEXT, artist TEXT, isExplicit TEXT, duration TEXT, djId INTEGER, FOREIGN KEY (djId) REFERENCES " + DJ_TABLE + " (djId) );");
     }
 
     @Override
@@ -281,7 +281,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     }
     //will probably never be used
     @SuppressLint("Range")
-    private ArrayList<Attendee> getAllAttendees()
+    public ArrayList<Attendee> getAllAttendees()
     {
         ArrayList<Attendee> listAttendees = new ArrayList<Attendee>();
 
@@ -314,7 +314,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     }
     //will probably never be used
     @SuppressLint("Range")
-    private ArrayList<Song> getAllSongs()
+    public ArrayList<Song> getAllSongs()
     {
         ArrayList<Song> listSongs = new ArrayList<Song>();
 
@@ -322,7 +322,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + SONG_TABLE + " ORDER BY songId;", null);
 
-        String songId;
+        int songId;
         String songName;
         String artist;
         String isExplicit;
@@ -333,7 +333,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         {
             do
             {
-                songId = cursor.getString(cursor.getColumnIndex("id"));
+                songId = cursor.getInt(cursor.getColumnIndex("id"));
                 songName = cursor.getString(cursor.getColumnIndex("name"));
                 artist = cursor.getString(cursor.getColumnIndex("artist"));
                 isExplicit = cursor.getString(cursor.getColumnIndex("isExplicit"));
@@ -400,7 +400,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     //=================================================
     //delete commands
 
-    public void deleteDj(String id)
+    public void deleteDj(int id)
     {
         //get writeable instance of database
         SQLiteDatabase db = getWritableDatabase();
@@ -433,7 +433,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.close();
     }
 
-    public void deleteSong(String id)
+    public void deleteSong(int id)
     {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -496,7 +496,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        String songId;
+        int songId;
         String songName;
         String artist;
         String isExplicit;
@@ -506,7 +506,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         {
             do
             {
-                songId = cursor.getString(cursor.getColumnIndex("songId"));
+                songId = cursor.getInt(cursor.getColumnIndex("songId"));
                 songName = cursor.getString(cursor.getColumnIndex("songName"));
                 artist = cursor.getString(cursor.getColumnIndex("artist"));
                 isExplicit = cursor.getString(cursor.getColumnIndex("isExplicit"));
@@ -529,6 +529,22 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.execSQL("UPDATE " + EVENT_TABLE + " SET isActive = 'true' WHERE eventCode = '" + eventCode + "';");
 
         db.close();
+    }
+
+    @SuppressLint("Range")
+    public String getDjOfEvent(String eventCode)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selectQuery = ("SELECT Djs.djName FROM " + EVENT_TABLE + " INNER JOIN " + DJ_TABLE + " ON Events.djId = Djs.djId WHERE Events.eventCode = '" + eventCode + "';");
+
+        Cursor cursor = db.rawQuery(selectQuery,null);
+
+        db.close();
+
+        cursor.moveToFirst();
+
+        return cursor.getString(cursor.getColumnIndex("djName"));
     }
     //=================================================
 }

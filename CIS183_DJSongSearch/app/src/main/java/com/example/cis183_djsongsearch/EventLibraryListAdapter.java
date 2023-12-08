@@ -45,13 +45,11 @@ public class EventLibraryListAdapter extends BaseAdapter
             view = mInflater.inflate(R.layout.event_library_custom_cell, null);
         }
 
-        TextView code = view.findViewById(R.id.tv_v_elcc_code);
         TextView date = view.findViewById(R.id.tv_v_elcc_date);
-        TextView location = view.findViewById(R.id.tv_v_elcc_loc);
+        TextView location = view.findViewById(R.id.tv_v_elcc_location);
 
         Event event = listOfEvents.get(i);
 
-        code.setText(event.getEventCode());
         date.setText(event.getDate());
         location.setText(event.getLocation());
 
