@@ -8,18 +8,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class EventSearch extends AppCompatActivity
 {
-    Button btn_j_es_manual;
-    Button btn_j_es_signOut;
-    Button btn_j_es_info;
+    TextView tv_j_es_error;
+    ImageButton btn_j_es_manual;
+    ImageButton btn_j_es_home;
+    ImageButton btn_j_es_attendeeInfo;
     ListView lv_j_es_events;
     Intent eventConfirmIntent;
     Intent eventManualSearchIntent;
     Intent attendeeInfoIntent;
     Intent mainActivityIntent;
+    DatabaseHelper dbHelper;
+    ArrayList<Event> listOfEvents;
+    EventLibraryListAdapter adapter;
 
 
     @Override
@@ -28,9 +36,10 @@ public class EventSearch extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_search);
 
+        tv_j_es_error = findViewById(R.id.tv_v_es_error);
         btn_j_es_manual = findViewById(R.id.btn_v_es_manual);
-        btn_j_es_signOut = findViewById(R.id.btn_v_es_signOut);
-        btn_j_es_info = findViewById(R.id.btn_v_es_info);
+        btn_j_es_home = findViewById(R.id.btn_v_es_home);
+        btn_j_es_attendeeInfo = findViewById(R.id.btn_v_es_attendeeInfo);
         lv_j_es_events = findViewById(R.id.lv_v_es_events);
 
         eventConfirmIntent = new Intent(EventSearch.this, EventConfirm.class);
@@ -38,8 +47,16 @@ public class EventSearch extends AppCompatActivity
         attendeeInfoIntent = new Intent(EventSearch.this, AttendeeInfo.class);
         mainActivityIntent = new Intent(EventSearch.this, MainActivity.class);
 
+        dbHelper = new DatabaseHelper(this);
+
+        listOfEvents = dbHelper.getAllNonPrivateEvents();
+
+        adapter = new EventLibraryListAdapter(this, listOfEvents);
+
+        lv_j_es_events.setAdapter(adapter);
+
         ManualButtonEventHandler();
-        SignOutButtonEventHandler();
+        HomeButtonEventHandler();
         InfoButtonEventHandler();
         EventClickEventHandler();
     }
@@ -56,9 +73,9 @@ public class EventSearch extends AppCompatActivity
         });
     }
 
-    private void SignOutButtonEventHandler()
+    private void HomeButtonEventHandler()
     {
-        btn_j_es_signOut.setOnClickListener(new View.OnClickListener()
+        btn_j_es_home.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -70,7 +87,7 @@ public class EventSearch extends AppCompatActivity
 
     private void InfoButtonEventHandler()
     {
-        btn_j_es_info.setOnClickListener(new View.OnClickListener()
+        btn_j_es_attendeeInfo.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -85,9 +102,18 @@ public class EventSearch extends AppCompatActivity
         lv_j_es_events.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            public void onItemClick(AdapterView<?> parent, View view, int i, long id)
             {
-                startActivity(eventConfirmIntent);
+                if(listOfEvents.get(i).getActive().equals("true"))
+                {
+                    AppData.setCurEvent(listOfEvents.get(i));
+
+                    startActivity(eventConfirmIntent);
+                }
+                else
+                {
+                    tv_j_es_error.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

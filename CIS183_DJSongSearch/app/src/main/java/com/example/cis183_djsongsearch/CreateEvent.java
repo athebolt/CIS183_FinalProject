@@ -11,8 +11,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class CreateEvent extends AppCompatActivity
 {
+    TextView tv_j_ce_error;
     EditText et_j_ce_code;
     EditText et_j_ce_date;
     EditText et_j_ce_time;
@@ -27,6 +30,7 @@ public class CreateEvent extends AppCompatActivity
     Intent eventLibraryIntent;
     Intent mainActivityIntent;
     DatabaseHelper dbHelper;
+    ArrayList<Event> listOfEvents;
     Boolean isPrivate;
 
     @Override
@@ -35,6 +39,7 @@ public class CreateEvent extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
 
+        tv_j_ce_error = findViewById(R.id.tv_v_ce_error);
         et_j_ce_code = findViewById(R.id.et_v_ce_code);
         et_j_ce_date = findViewById(R.id.et_v_ce_date);
         et_j_ce_time = findViewById(R.id.et_v_ce_time);
@@ -51,6 +56,8 @@ public class CreateEvent extends AppCompatActivity
         mainActivityIntent = new Intent(CreateEvent.this, MainActivity.class);
 
         dbHelper = new DatabaseHelper(this);
+
+        listOfEvents = dbHelper.getAllEvents();
 
         isPrivate = null;
 
@@ -97,19 +104,40 @@ public class CreateEvent extends AppCompatActivity
             public void onClick(View v)
             {
 
-                Event event = new Event(
-                        et_j_ce_code.getText().toString(),
-                        AppData.getUser().getDjId(),
-                        et_j_ce_date.getText().toString(),
-                        et_j_ce_time.getText().toString(),
-                        et_j_ce_location.getText().toString(),
-                        isPrivate.toString(),
-                        "false"
-                        );
+                if(!(isPrivate == null) && !et_j_ce_code.toString().equals("") && !et_j_ce_date.toString().equals("") && !et_j_ce_time.toString().equals("") && !et_j_ce_location.toString().equals(""))
+                {
+                    for (int i = 0; i < listOfEvents.size(); i++)
+                    {
+                        if(listOfEvents.get(i).getEventCode().equals(et_j_ce_code.getText().toString()))
+                        {
+                            tv_j_ce_error.setText("Event Code already exists.");
 
-                dbHelper.addNewEvent(event);
+                            tv_j_ce_error.setVisibility(View.VISIBLE);
 
-                startActivity(eventLibraryIntent);
+                            return;
+                        }
+                    }
+
+                    Event event = new Event(
+                            et_j_ce_code.getText().toString(),
+                            AppData.getUser().getDjId(),
+                            et_j_ce_date.getText().toString(),
+                            et_j_ce_time.getText().toString(),
+                            et_j_ce_location.getText().toString(),
+                            isPrivate.toString(),
+                            "false"
+                    );
+
+                    dbHelper.addNewEvent(event);
+
+                    startActivity(eventLibraryIntent);
+                }
+                else
+                {
+                    tv_j_ce_error.setText("Please fill all fields.");
+
+                    tv_j_ce_error.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

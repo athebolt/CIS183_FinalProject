@@ -4,41 +4,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SongSearch">
-
-    <TextView
-        android:id="@+id/textView59"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="11dp"
-        android:text="Find Song"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/lv_v_ss_songs"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:background="@drawable/background"
+    tools:context=".SongSearch"
+    tools:layout_editor_absoluteX="6dp"
+    tools:layout_editor_absoluteY="-9dp">
 
     <ListView
         android:id="@+id/lv_v_ss_songs"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="53dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_v_ss_back"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="338dp"
+        android:layout_height="498dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView59" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_v_ss_back"
+    <ImageView
+        android:id="@+id/imageView134"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
-        android:text="Back"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/search_the_library_" />
+
+    <ImageButton
+        android:id="@+id/btn_v_ss_queue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="24dp"
+        android:background="@android:drawable/divider_horizontal_bright"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/rectangle_29" />
+
+    <ImageView
+        android:id="@+id/imageView139"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="108dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/song_queue" />
+
+    <ImageButton
+        android:id="@+id/btn_v_ss_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="24dp"
+        android:background="@android:drawable/presence_invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lv_v_ss_songs" />
+        app:srcCompat="@drawable/ellipse_9" />
+
+    <ImageView
+        android:id="@+id/imageView140"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        android:layout_marginBottom="26dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/home_circle_icon_137496_8" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

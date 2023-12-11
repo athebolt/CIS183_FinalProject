@@ -58,10 +58,14 @@ public class EventInfo extends AppCompatActivity
         if(AppData.getCurEvent().getPrivate().equals("true"))
         {
             tv_j_ei_privateY.setVisibility(View.VISIBLE);
+
+            isPrivate = true;
         }
         else
         {
             tv_j_ei_privateN.setVisibility(View.VISIBLE);
+
+            isPrivate = false;
         }
 
         PrivateYButtonEventHandler();

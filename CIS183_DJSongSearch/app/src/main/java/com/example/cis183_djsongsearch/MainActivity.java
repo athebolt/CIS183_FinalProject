@@ -33,6 +33,11 @@ public class MainActivity extends AppCompatActivity
         //if any rows are empty, not anymore
         dbHelper.initializeDB();
 
+        if(AppData.getReqSongs() == null)
+        {
+            AppData.initReqSongs();
+        }
+
         dJSignInButtonEventHandler();
         attendeeSignInButtonEventHandler();
     }

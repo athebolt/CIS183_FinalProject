@@ -9,11 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class AttendeeSignIn extends AppCompatActivity
 {
+    TextView tv_j_asi_error;
     EditText et_j_asi_uName;
     EditText et_j_asi_pass;
     ImageButton btn_j_asi_signIn;
@@ -31,6 +33,7 @@ public class AttendeeSignIn extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendee_sign_in);
 
+        tv_j_asi_error = findViewById(R.id.tv_v_asi_error);
         et_j_asi_uName = findViewById(R.id.et_v_asi_uName);
         et_j_asi_pass = findViewById(R.id.et_v_asi_pass);
         btn_j_asi_signIn = findViewById(R.id.btn_v_asi_signIn);
@@ -59,17 +62,24 @@ public class AttendeeSignIn extends AppCompatActivity
 
                 listOfAttendees = dbHelper.getAllAttendees();
 
-                while(!et_j_asi_uName.getText().toString().equals(listOfAttendees.get(i).getUsername()) && i < listOfAttendees.size())
+                while(i < listOfAttendees.size())
                 {
+                    if(et_j_asi_uName.getText().toString().equals(listOfAttendees.get(i).getUsername()))
+                    {
+                        if(et_j_asi_pass.getText().toString().equals(listOfAttendees.get(i).getPassword()))
+                        {
+                            AppData.setCurAttendee(listOfAttendees.get(i));
+
+                            startActivity(eventSearchIntent);
+                        }
+                    }
+
                     i++;
                 }
 
-                if(et_j_asi_pass.getText().toString().equals(listOfAttendees.get(i).getPassword()))
-                {
-                    AppData.setCurAttendee(listOfAttendees.get(i));
-
-                    startActivity(eventSearchIntent);
-                }
+                et_j_asi_uName.setText("");
+                et_j_asi_pass.setText("");
+                tv_j_asi_error.setVisibility(View.VISIBLE);
             }
         });
     }

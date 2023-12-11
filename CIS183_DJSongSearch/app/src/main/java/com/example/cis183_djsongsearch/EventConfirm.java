@@ -33,7 +33,7 @@ public class EventConfirm extends AppCompatActivity
 
         dbHelper = new DatabaseHelper(this);
 
-        tv_j_ec_dj.setText(dbHelper.getDjOfEvent(AppData.getCurEvent().getEventCode()));
+        tv_j_ec_dj.setText("DJ Name: " + dbHelper.getDjOfEvent(AppData.getCurEvent().getEventCode()));
 
         NoButtonEventHandler();
         YesButtonEventHandler();

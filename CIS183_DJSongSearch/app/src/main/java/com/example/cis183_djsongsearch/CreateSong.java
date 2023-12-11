@@ -78,8 +78,8 @@ public class CreateSong extends AppCompatActivity
             public void onClick(View v) {
                 isExplicit = false;
 
-                tv_j_cs_explicitY.setVisibility(View.VISIBLE);
-                tv_j_cs_explicitN.setVisibility(View.INVISIBLE);
+                tv_j_cs_explicitY.setVisibility(View.INVISIBLE);
+                tv_j_cs_explicitN.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -91,17 +91,21 @@ public class CreateSong extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Song newSong = new Song(
-                        et_j_cs_name.getText().toString(),
-                        et_j_cs_artist.getText().toString(),
-                        isExplicit.toString(),
-                        et_j_cs_duration.getText().toString(),
-                        AppData.getUser().getDjId()
-                );
 
-                dbHelper.addNewSong(newSong);
+                if(!(isExplicit == null) && !et_j_cs_name.toString().equals("") && !et_j_cs_artist.toString().equals("") && !et_j_cs_duration.toString().equals(""))
+                {
+                    Song newSong = new Song(
+                            et_j_cs_name.getText().toString(),
+                            et_j_cs_artist.getText().toString(),
+                            isExplicit.toString(),
+                            et_j_cs_duration.getText().toString(),
+                            AppData.getUser().getDjId()
+                    );
 
-                startActivity(songLibraryIntent);
+                    dbHelper.addNewSong(newSong);
+
+                    startActivity(songLibraryIntent);
+                }
             }
         });
     }

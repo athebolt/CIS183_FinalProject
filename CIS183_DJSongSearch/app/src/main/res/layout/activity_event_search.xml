@@ -4,64 +4,112 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".EventSearch">
-
-    <TextView
-        android:id="@+id/textView51"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="57dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="18dp"
-        android:text="Find Event"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_v_es_manual"
-        app:layout_constraintEnd_toEndOf="@+id/btn_v_es_manual"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_v_es_manual"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="9dp"
-        android:text="Manual Entry"
-        app:layout_constraintBottom_toTopOf="@+id/lv_v_es_events"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView51" />
 
     <ListView
         android:id="@+id/lv_v_es_events"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_v_es_signOut"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="330dp"
+        android:layout_height="419dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="228dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_v_es_manual" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_v_es_signOut"
+    <ImageView
+        android:id="@+id/imageView111"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="50dp"
-        android:text="Sign Out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_v_es_info"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lv_v_es_events" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/rectangle_1" />
 
-    <Button
-        android:id="@+id/btn_v_es_info"
+    <ImageView
+        android:id="@+id/imageView112"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="13dp"
-        android:layout_marginBottom="52dp"
-        android:text="Info"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/find_event" />
+
+    <ImageButton
+        android:id="@+id/btn_v_es_manual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="152dp"
+        android:background="@android:drawable/divider_horizontal_bright"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/rectangle_29" />
+
+    <ImageView
+        android:id="@+id/imageView114"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="160dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/manual_entry" />
+
+    <ImageButton
+        android:id="@+id/btn_v_es_attendeeInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@android:drawable/divider_horizontal_bright"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_v_es_signOut" />
+        app:srcCompat="@drawable/rectangle_29" />
+
+    <ImageView
+        android:id="@+id/imageView119"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="96dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_v_es_attendeeInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/my_profile" />
+
+    <ImageButton
+        android:id="@+id/btn_v_es_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@android:drawable/presence_invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ellipse_9" />
+
+    <ImageView
+        android:id="@+id/imageView121"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginBottom="26dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/home_circle_icon_137496_8" />
+
+    <TextView
+        android:id="@+id/tv_v_es_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="200dp"
+        android:text="Please select an active event."
+        android:textColor="@color/design_default_color_error"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

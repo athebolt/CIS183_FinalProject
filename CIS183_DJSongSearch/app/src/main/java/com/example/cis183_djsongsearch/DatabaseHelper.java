@@ -21,7 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public DatabaseHelper(Context context)
     {
         //creates database
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, 7);
     }
 
     @Override
@@ -76,6 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
             SQLiteDatabase db = this.getWritableDatabase();
 
             db.execSQL("INSERT INTO " + EVENT_TABLE + " VALUES('0','1','12/10/2023','10:10','Monroe, MI','false','true');");
+            db.execSQL("INSERT INTO " + EVENT_TABLE + " VALUES('event','1','12/11/2023','10:30','Dundee, MI','false','false');");
 
             db.close();
         }
@@ -197,7 +198,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
 
         //INSERT INTO SONG_TABLE VALUES('name','artist','isExplicit','duration','djId');
-        db.execSQL("INSERT INTO " + SONG_TABLE + " (songName, artist, isExplicit, duration, djId) VALUES(" + s.getSongName() + "','" + s.getArtist() + "','" + s.getExplicit() + "','" + s.getDuration() + "','" + s.getDjId() + "');");
+        db.execSQL("INSERT INTO " + SONG_TABLE + " (songName, artist, isExplicit, duration, djId) VALUES('" + s.getSongName() + "','" + s.getArtist() + "','" + s.getExplicit() + "','" + s.getDuration() + "','" + s.getDjId() + "');");
 
         db.close();
     }
@@ -263,7 +264,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
             do
             {
                 eventCode = cursor.getString(cursor.getColumnIndex("eventCode"));
-                djId = cursor.getInt(cursor.getColumnIndex("dj"));
+                djId = cursor.getInt(cursor.getColumnIndex("djId"));
                 date = cursor.getString(cursor.getColumnIndex("date"));
                 time = cursor.getString(cursor.getColumnIndex("time"));
                 location = cursor.getString(cursor.getColumnIndex("location"));
@@ -370,8 +371,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        //UPDATE EVENT_TABLE SET djId = 'djId' , date = 'date' , time = 'time' , location = 'location' , isPrivate = 'isPrivate' WHERE EVENT_PRIMARY = 'eventCode';
-        db.execSQL("UPDATE " + EVENT_TABLE + " SET dj = '" + e.getDjId() + "' , date = '" + e.getTime() + "' , location = '" + e.getLocation() + "' , isPrivate = '" + e.getPrivate() + "' WHERE eventCode = '" + e.getEventCode() + "';");
+        //UPDATE EVENT_TABLE SET djId = 'djId' , date = 'date' , time = 'time' , location = 'location' , isPrivate = 'isPrivate' WHERE eventCode = 'eventCode';
+        db.execSQL("UPDATE " + EVENT_TABLE + " SET djId = '" + e.getDjId() + "' , date = '" + e.getDate() + "' , time = '" + e.getTime() + "' , location = '" + e.getLocation() + "' , isPrivate = '" + e.getPrivate() + "' WHERE eventCode = '" + e.getEventCode() + "';");
 
         db.close();
     }
@@ -534,17 +535,62 @@ public class DatabaseHelper extends SQLiteOpenHelper
     @SuppressLint("Range")
     public String getDjOfEvent(String eventCode)
     {
+        String djName;
+
         SQLiteDatabase db = getReadableDatabase();
 
-        String selectQuery = ("SELECT Djs.djName FROM " + EVENT_TABLE + " INNER JOIN " + DJ_TABLE + " ON Events.djId = Djs.djId WHERE Events.eventCode = '" + eventCode + "';");
+        String selectQuery = "SELECT Djs.djName FROM " + EVENT_TABLE + " INNER JOIN " + DJ_TABLE + " ON Events.djId = Djs.djId WHERE Events.eventCode = '" + eventCode + "';";
 
         Cursor cursor = db.rawQuery(selectQuery,null);
 
-        db.close();
-
         cursor.moveToFirst();
 
-        return cursor.getString(cursor.getColumnIndex("djName"));
+        djName = cursor.getString(cursor.getColumnIndex("djName"));
+
+        db.close();
+
+        return djName;
+    }
+
+    @SuppressLint("Range")
+    public ArrayList<Event> getAllNonPrivateEvents()
+    {
+        ArrayList<Event> listEvents = new ArrayList<Event>();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM " + EVENT_TABLE + " WHERE isPrivate = 'false'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        String eventCode;
+        int djId;
+        String date;
+        String time;
+        String location;
+        String isPrivate;
+        String isActive;
+
+        if(cursor.moveToFirst())
+        {
+            do
+            {
+                eventCode = cursor.getString(cursor.getColumnIndex("eventCode"));
+                djId = cursor.getInt(cursor.getColumnIndex("djId"));
+                date = cursor.getString(cursor.getColumnIndex("date"));
+                time = cursor.getString(cursor.getColumnIndex("time"));
+                location = cursor.getString(cursor.getColumnIndex("location"));
+                isPrivate = cursor.getString(cursor.getColumnIndex("isPrivate"));
+                isActive = cursor.getString(cursor.getColumnIndex("isActive"));
+
+                listEvents.add(new Event(eventCode, djId, date, time, location, isPrivate, isActive));
+            }
+            while(cursor.moveToNext());
+        }
+
+        db.close();
+
+        return listEvents;
     }
     //=================================================
 }

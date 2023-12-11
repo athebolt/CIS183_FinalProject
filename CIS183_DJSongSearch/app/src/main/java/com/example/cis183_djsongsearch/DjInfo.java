@@ -66,6 +66,8 @@ public class DjInfo extends AppCompatActivity
 
                 dbHelper.updateDj(newDj);
 
+                AppData.setUser(newDj);
+
                 startActivity(djHomeIntent);
             }
         });

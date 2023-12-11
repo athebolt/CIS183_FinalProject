@@ -139,6 +139,7 @@
         android:layout_height="53dp"
         android:layout_marginStart="148dp"
         android:layout_marginBottom="16dp"
+        android:background="@android:drawable/divider_horizontal_bright"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/rectangle_29" />
@@ -242,5 +243,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/home_circle_icon_137496_8" />
+
+    <TextView
+        android:id="@+id/tv_v_ce_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="10dp"
+        android:text="Please fill all fields."
+        android:textColor="@color/design_default_color_error"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView34" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

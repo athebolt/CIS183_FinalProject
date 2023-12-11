@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,11 +64,13 @@ public class DjSignIn extends AppCompatActivity
 
                 while(i < listOfDjs.size())
                 {
-                    if(!et_j_dsi_dName.getText().toString().equals(listOfDjs.get(i).getDjName()))
+                    if(et_j_dsi_dName.getText().toString().equals(listOfDjs.get(i).getDjName()))
                     {
                         if(et_j_dsi_pass.getText().toString().equals(listOfDjs.get(i).getPassword()))
                         {
                             AppData.setUser(listOfDjs.get(i));
+
+                            Log.d("Logged in DJ id", AppData.getUser().getDjId() + "");
 
                             startActivity(djHomeIntent);
                         }

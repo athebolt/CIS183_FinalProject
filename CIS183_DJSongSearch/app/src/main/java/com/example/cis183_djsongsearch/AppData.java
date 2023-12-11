@@ -36,6 +36,10 @@ public class AppData
     public static void setCurSong(Song s) {
         curSong = s;
     }
+    public static void initReqSongs()
+    {
+        reqSongs = new ArrayList<Song>();
+    }
     public static void addReqSong(Song s)
     {
         reqSongs.add(s);

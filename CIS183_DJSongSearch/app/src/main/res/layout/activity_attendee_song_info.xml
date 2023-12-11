@@ -91,23 +91,27 @@
         android:id="@+id/tv_v_as_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="56dp"
         android:text="TextView"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="185dp" />
+        app:layout_constraintStart_toEndOf="@+id/imageView38"
+        app:layout_constraintTop_toBottomOf="@+id/imageView28" />
 
     <TextView
         android:id="@+id/tv_v_as_duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="148dp"
         android:text="TextView"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="277dp" />
+        app:layout_constraintStart_toEndOf="@+id/imageView38"
+        app:layout_constraintTop_toBottomOf="@+id/imageView28" />
 
     <TextView
         android:id="@+id/tv_v_as_explicitY"
@@ -141,12 +145,14 @@
         android:id="@+id/tv_v_as_artist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="101dp"
         android:text="TextView"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="230dp" />
+        app:layout_constraintStart_toEndOf="@+id/imageView38"
+        app:layout_constraintTop_toBottomOf="@+id/imageView28" />
 
     <ImageButton
         android:id="@+id/btn_v_as_home"

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,6 +25,7 @@ public class EventLibrary extends AppCompatActivity
     Intent djHomeIntent;
     Intent eventInfoIntent;
     Intent activeEventIntent;
+    Intent mainActivityIntent;
     DatabaseHelper dbHelper;
     ArrayList<Event> listOfEvents;
     ArrayList<Event> activeEvents;
@@ -47,10 +49,16 @@ public class EventLibrary extends AppCompatActivity
         djHomeIntent = new Intent(EventLibrary.this, DjHome.class);
         eventInfoIntent = new Intent(EventLibrary.this, EventInfo.class);
         activeEventIntent = new Intent(EventLibrary.this, ActiveEvent.class);
+        mainActivityIntent = new Intent(EventLibrary.this, MainActivity.class);
 
         dbHelper = new DatabaseHelper(this);
 
         listOfEvents = dbHelper.getEventsOfDj(AppData.getUser().getDjId());
+
+        activeEvents = new ArrayList<Event>();
+        upcomingEvents = new ArrayList<Event>();
+
+        Log.d("List of Events size", listOfEvents.size() + "");
 
         for(int i = 0; i < listOfEvents.size(); i++)
         {
@@ -58,17 +66,22 @@ public class EventLibrary extends AppCompatActivity
             {
                 activeEvents.add(listOfEvents.get(i));
             }
-            else
+        }
+
+        for(int i = 0; i < listOfEvents.size(); i++)
+        {
+            if(listOfEvents.get(i).getActive().equals("false"))
             {
                 upcomingEvents.add(listOfEvents.get(i));
             }
         }
 
         activeAdapter = new EventLibraryListAdapter(this, activeEvents);
-        upcomingAdapter = new EventLibraryListAdapter(this, upcomingEvents);
-
         lv_j_el_active.setAdapter(activeAdapter);
+
+        upcomingAdapter = new EventLibraryListAdapter(this, upcomingEvents);
         lv_j_el_upcoming.setAdapter(upcomingAdapter);
+
 
         CreateButtonEventHandler();
         BackButtonEventHandler();
@@ -76,6 +89,19 @@ public class EventLibrary extends AppCompatActivity
         ActiveLongClickEventHandler();
         UpcomingClickEventHandler();
         UpcomingLongClickEventHandler();
+        HomeButtonClickEventHandler();
+    }
+
+    private void HomeButtonClickEventHandler()
+    {
+        btn_j_el_home.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(mainActivityIntent);
+            }
+        });
     }
     private void CreateButtonEventHandler()
     {

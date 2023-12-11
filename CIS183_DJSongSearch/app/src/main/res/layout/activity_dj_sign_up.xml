@@ -7,6 +7,20 @@
     android:background="@drawable/background"
     tools:context=".DjSignUp">
 
+    <EditText
+        android:id="@+id/et_v_dsu_pass"
+        android:layout_width="175dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="83dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imageView87"
+        app:layout_constraintTop_toBottomOf="@+id/imageView85" />
+
     <ImageView
         android:id="@+id/imageView85"
         android:layout_width="wrap_content"
@@ -71,20 +85,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView85" />
 
-    <EditText
-        android:id="@+id/et_v_dsu_pass"
-        android:layout_width="170dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="78dp"
-        android:ems="10"
-        android:inputType="text"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imageView87"
-        app:layout_constraintTop_toBottomOf="@+id/imageView85" />
-
     <ImageButton
         android:id="@+id/btn_v_dsu_signUp"
         android:layout_width="wrap_content"
@@ -147,5 +147,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/back_arrow_8" />
+
+    <TextView
+        android:id="@+id/tv_v_dsu_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="19dp"
+        android:text="DJ Name already exists."
+        android:textColor="@color/design_default_color_error"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_v_dsu_signUp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

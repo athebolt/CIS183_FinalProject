@@ -21,6 +21,7 @@ public class ActiveEvent extends AppCompatActivity
     ListView lv_j_ae_reqSongs;
     Intent eventLibraryIntent;
     Intent songInfoIntent;
+    Intent mainActivityIntent;
     DatabaseHelper dbHelper;
     SongLibraryListAdapter adapter;
 
@@ -37,6 +38,7 @@ public class ActiveEvent extends AppCompatActivity
 
         eventLibraryIntent = new Intent(ActiveEvent.this, EventLibrary.class);
         songInfoIntent = new Intent(ActiveEvent.this, SongInfo.class);
+        mainActivityIntent = new Intent(ActiveEvent.this, MainActivity.class);
 
         dbHelper = new DatabaseHelper(this);
 
@@ -45,11 +47,23 @@ public class ActiveEvent extends AppCompatActivity
         lv_j_ae_reqSongs.setAdapter(adapter);
 
         
-
+        HomeButtonEventHandler();
         BackButtonEventHandler();
         EndButtonEventHandler();
         ListClickEventHandler();
         ListLongClickEventHandler();
+    }
+
+    private void HomeButtonEventHandler()
+    {
+        btn_j_ae_home.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(mainActivityIntent);
+            }
+        });
     }
 
     private void BackButtonEventHandler()
@@ -71,6 +85,8 @@ public class ActiveEvent extends AppCompatActivity
            @Override
            public void onClick(View v)
            {
+               dbHelper.deleteEvent(AppData.getCurEvent().getEventCode());
+
                startActivity(eventLibraryIntent);
            }
        });
@@ -98,6 +114,8 @@ public class ActiveEvent extends AppCompatActivity
             public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long id)
             {
                 AppData.removeReqSong(i);
+
+                adapter.notifyDataSetChanged();
 
                 return false;
             }
